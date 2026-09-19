@@ -1,0 +1,49 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Vehicle {
+  id              String   @id @default(uuid())
+  rcNumber        String   @unique
+  ownerName       String
+  ownerCount      Int      @default(1)
+  makerModel      String
+  regDate         String
+  fuelType        String
+  rtoLocation     String
+  insuranceExpiry String
+  fitnessUpto     String
+  pucUpto         String
+  chassisLast4    String
+  engineLast4     String
+  vehicleAgeYears Float
+  rawDetails      String?  // JSON string
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  inspections     InspectionBooking[]
+}
+
+model InspectionBooking {
+  id              String   @id @default(uuid())
+  vehicleRc       String
+  vehicle         Vehicle? @relation(fields: [vehicleRc], references: [rcNumber])
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  city            String
+  inspectionDate  String
+  timeSlot        String
+  amountInr       Int      @default(499)
+  razorpayOrderId String?
+  paymentStatus   String   @default("paid") // demo paid / pending / completed
+  inspectionStatus String  @default("scheduled") // scheduled, in_progress, completed
+  createdAt       DateTime @default(now())
+}
