@@ -103,3 +103,27 @@
   background: #ffe17c;
   border-radius: 2px;
 }
+
+/* Print / PDF Styles */
+@media print {
+  header, footer, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  main {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .brutalist-card, .brutalist-card-dark {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+}

@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ReportActions from '@/components/ReportActions';
 import { getVehicleReport, sanitizeRcNumber } from '@/lib/vehicleService';
 import { estimateMaintenanceCost } from '@/lib/costEstimatorService';
 
@@ -128,6 +129,29 @@ export default async function ReportPage({ params }: ReportPageProps) {
                   <span>BOOK 150-PT INSPECTION (₹499)</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Bar: Download PDF, WhatsApp Share & Negotiation Advisory */}
+          <ReportActions
+            rcNumber={vehicle.rcNumber}
+            makerModel={vehicle.makerModel}
+            ownerName={vehicle.ownerName}
+            insuranceStatus={vehicle.insuranceStatus}
+            annualMaintenanceCostINR={maintenance.annualMaintenanceCostINR}
+          />
+
+          {/* Print-Only Official Certified Header */}
+          <div className="hidden print-only mb-6 p-4 border-2 border-black">
+            <div className="flex justify-between items-center pb-2 border-b border-black">
+              <div>
+                <h1 className="font-anton text-2xl tracking-wider">VERICAR AUTOMOTIVE AUDIT CERTIFICATE</h1>
+                <p className="font-satoshi text-xs text-neutral-600">OFFICIAL SOVEREIGN VEHICLE VERIFICATION DOSSIER</p>
+              </div>
+              <div className="text-right">
+                <span className="font-mono text-xs font-bold">CERTIFICATE ID: VRC-{vehicle.rcNumber}</span>
+                <p className="font-satoshi text-[10px] text-neutral-500">Issued: {new Date().toLocaleDateString('en-IN')}</p>
               </div>
             </div>
           </div>
