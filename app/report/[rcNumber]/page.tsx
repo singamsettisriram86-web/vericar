@@ -23,6 +23,7 @@ import {
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ReportActions from '@/components/ReportActions';
+import AuthGate from '@/components/AuthGate';
 import { getVehicleReport, sanitizeRcNumber } from '@/lib/vehicleService';
 import { estimateMaintenanceCost } from '@/lib/costEstimatorService';
 
@@ -51,6 +52,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#171e19]">
       <Navbar />
+      <AuthGate rcNumber={cleanRc} />
 
       <main className="pt-28 pb-20 bg-[#ffffff] bg-grid-light flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
