@@ -25,8 +25,8 @@ export async function POST(request: Request) {
     } else if (plan === 'CREDITS_99') {
       amountInr = 99;
       creditsAdded = 8;
-    } else if (plan === 'RTO_DOSSIER_10') {
-      amountInr = 10;
+    } else if (plan === 'RTO_DOSSIER_39' || plan === 'RTO_DOSSIER_10') {
+      amountInr = 39;
       creditsAdded = 0;
       if (!cleanRc) {
         return NextResponse.json({ error: 'Vehicle RC required for RTO Dossier' }, { status: 400 });

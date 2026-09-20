@@ -77,7 +77,7 @@ export async function POST(request: Request) {
       });
     }
 
-    if (plan === 'RTO_DOSSIER_10' && cleanRc) {
+    if ((plan === 'RTO_DOSSIER_39' || plan === 'RTO_DOSSIER_10') && cleanRc) {
       // Record unlock in UnlockedDossier
       await prisma.unlockedDossier.upsert({
         where: {

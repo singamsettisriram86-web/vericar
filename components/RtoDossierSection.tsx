@@ -73,13 +73,13 @@ export default function RtoDossierSection({
     setErrorMsg('');
 
     try {
-      // 1. Create ₹10 order
+      // 1. Create ₹39 order
       const orderRes = await fetch('/api/payment/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: userEmail,
-          plan: 'RTO_DOSSIER_10',
+          plan: 'RTO_DOSSIER_39',
           targetRc: rcNumber,
         }),
       });
@@ -152,7 +152,7 @@ export default function RtoDossierSection({
           orderId: payDetails.orderId,
           paymentId: payDetails.paymentId,
           signature: payDetails.signature,
-          plan: 'RTO_DOSSIER_10',
+          plan: 'RTO_DOSSIER_39',
           targetRc: rcNumber,
         }),
       });
@@ -202,7 +202,7 @@ export default function RtoDossierSection({
               </span>
             ) : (
               <span className="px-2.5 py-0.5 bg-[#ffe17c] text-[#171e19] font-anton text-xs rounded flex items-center gap-1">
-                <Lock className="w-3 h-3" /> ₹10 PAYWALL
+                <Lock className="w-3 h-3" /> ₹39 PAYWALL
               </span>
             )}
           </div>
@@ -254,7 +254,7 @@ export default function RtoDossierSection({
                 ) : (
                   <>
                     <Lock className="w-4 h-4" />
-                    <span>UNLOCK FULL OFFICIAL SHEET (₹10)</span>
+                    <span>UNLOCK FULL OFFICIAL SHEET (₹39)</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -270,7 +270,7 @@ export default function RtoDossierSection({
               <Info className="w-5 h-5 text-[#171e19] shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-anton text-sm text-[#171e19] tracking-wider uppercase">
-                  WHAT YOU WILL SEE ONCE UNLOCKED FOR ₹10:
+                  WHAT YOU WILL SEE ONCE UNLOCKED FOR ₹39:
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2 font-satoshi text-xs text-[#171e19]/80">
                   <div className="flex items-center gap-1.5">
@@ -459,7 +459,7 @@ export default function RtoDossierSection({
                 </div>
                 <div>
                   <h4 className="font-anton text-lg tracking-wide text-white">
-                    UNLOCK THE COMPLETE OFFICIAL EXTRACT FOR JUST ₹10
+                    UNLOCK THE COMPLETE OFFICIAL EXTRACT FOR JUST ₹39
                   </h4>
                   <p className="font-satoshi text-xs text-white/70">
                     Instant 1-click unlock via UPI/Card. Full unmasked PDF export included.
@@ -479,7 +479,7 @@ export default function RtoDossierSection({
                   </>
                 ) : (
                   <>
-                    <span>PAY ₹10 & UNLOCK NOW</span>
+                    <span>PAY ₹39 & UNLOCK NOW</span>
                     <ArrowRight className="w-4 h-4 text-[#171e19]" />
                   </>
                 )}
