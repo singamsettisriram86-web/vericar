@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Sparkles, CheckCircle2, ShieldAlert, ArrowRight, Car } from 'lucide-react';
 import LoginModal from './LoginModal';
+import RechargeModal from './RechargeModal';
 
 const SAMPLE_CHIPS = [
   { label: 'AP05EN9264', desc: 'Honda Activa (Live)' },
@@ -18,10 +19,12 @@ export default function HeroSection() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isRechargeModalOpen, setIsRechargeModalOpen] = useState(false);
   const [pendingRc, setPendingRc] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent, customRc?: string) => {
+  const handleSearch = async (e?: React.FormEvent, customRc?: string) => {
     if (e) e.preventDefault();
     const query = (customRc || rcNumber).trim().toUpperCase();
     if (!query) {
@@ -34,7 +37,7 @@ export default function HeroSection() {
     }
     setErrorMsg('');
 
-    // Gate: Check if user has an account / logged in
+    // Gate 1: Check if user has an account / logged in
     const existingUser = typeof window !== 'undefined' ? localStorage.getItem('vericar_user_email') : null;
 
     if (!existingUser) {
@@ -44,9 +47,37 @@ export default function HeroSection() {
       return;
     }
 
+    setUserEmail(existingUser);
     setLoading(true);
-    router.push(`/report/${encodeURIComponent(query)}`);
+
+    // Gate 2: Check / deduct inspection credit
+    try {
+      const creditRes = await fetch('/api/user/credits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: existingUser,
+          rcNumber: query,
+        }),
+      });
+
+      const creditData = await creditRes.json();
+
+      if (!creditRes.ok || !creditData.success) {
+        setLoading(false);
+        setPendingRc(query);
+        setIsRechargeModalOpen(true);
+        return;
+      }
+
+      // Has credits or already inspected -> proceed to report!
+      router.push(`/report/${encodeURIComponent(query)}`);
+    } catch {
+      // If network glitch, allow proceed to report page where AuthGate verifies
+      router.push(`/report/${encodeURIComponent(query)}`);
+    }
   };
+
 
   return (
     <>
@@ -180,6 +211,25 @@ export default function HeroSection() {
         onClose={() => setIsAuthModalOpen(false)}
         pendingRc={pendingRc}
         initialMode="signup"
+        onLoginSuccess={(email) => {
+          setUserEmail(email);
+          if (pendingRc) {
+            handleSearch(undefined, pendingRc);
+          }
+        }}
+      />
+
+      {/* Recharge Modal Triggered When Credits Reach 0 */}
+      <RechargeModal
+        isOpen={isRechargeModalOpen}
+        onClose={() => setIsRechargeModalOpen(false)}
+        userEmail={userEmail}
+        pendingRc={pendingRc}
+        onSuccess={() => {
+          if (pendingRc) {
+            router.push(`/report/${encodeURIComponent(pendingRc)}`);
+          }
+        }}
       />
     </>
   );

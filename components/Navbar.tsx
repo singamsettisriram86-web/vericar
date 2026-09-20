@@ -5,17 +5,33 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, User, LogOut, ShieldCheck } from 'lucide-react';
 import LoginModal from './LoginModal';
+import RechargeModal from './RechargeModal';
 import { createClient } from '@/lib/supabaseClient';
 
 export default function Navbar() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRechargeModalOpen, setIsRechargeModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [credits, setCredits] = useState<number | null>(null);
+
+  const fetchCredits = async (email: string) => {
+    try {
+      const res = await fetch(`/api/user/credits?email=${encodeURIComponent(email)}`);
+      const data = await res.json();
+      if (data && typeof data.credits === 'number') {
+        setCredits(data.credits);
+      }
+    } catch {
+      // ignore
+    }
+  };
 
   useEffect(() => {
     // 1. Check local session
     const local = localStorage.getItem('vericar_user_email');
     if (local) {
       setCurrentUser(local);
+      fetchCredits(local);
     }
 
     // 2. Check Supabase auth session
@@ -25,6 +41,7 @@ export default function Navbar() {
         if (data?.user?.email) {
           setCurrentUser(data.user.email);
           localStorage.setItem('vericar_user_email', data.user.email);
+          fetchCredits(data.user.email);
         }
       });
     } catch {
@@ -42,7 +59,9 @@ export default function Navbar() {
       // ignore
     }
     setCurrentUser(null);
+    setCredits(null);
   };
+
 
   return (
     <>
@@ -85,20 +104,37 @@ export default function Navbar() {
           </nav>
 
           {/* Right action group */}
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-3 sm:gap-5">
             
             {currentUser ? (
-              <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-[#f8f9fa] border border-[#171e19]/15 rounded-full">
+              <div className="flex items-center gap-2 sm:gap-3">
+                {/* Credits pill */}
+                <button
+                  onClick={() => setIsRechargeModalOpen(true)}
+                  title="Click to recharge credits"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-satoshi text-xs font-bold transition-all border cursor-pointer ${
+                    credits === 0
+                      ? 'bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100'
+                      : 'bg-[#ffe17c]/25 hover:bg-[#ffe17c]/40 border-[#171e19]/20 text-[#171e19]'
+                  }`}
+                >
+                  <span>⚡ {credits !== null ? credits : '...'} {credits === 1 ? 'Credit' : 'Credits'}</span>
+                  <span className="text-[10px] uppercase font-bold text-[#171e19]/60 underline hidden sm:inline">
+                    +Recharge
+                  </span>
+                </button>
+
+                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#f8f9fa] border border-[#171e19]/15 rounded-full">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-satoshi text-xs font-bold text-[#171e19] max-w-[140px] truncate">
+                  <span className="font-satoshi text-xs font-bold text-[#171e19] max-w-[130px] truncate">
                     {currentUser}
                   </span>
                 </div>
+
                 <button
                   onClick={handleLogout}
                   title="Sign Out"
-                  className="font-satoshi text-xs font-semibold text-[#171e19]/60 hover:text-red-600 transition-colors flex items-center gap-1 cursor-pointer"
+                  className="font-satoshi text-xs font-semibold text-[#171e19]/60 hover:text-red-600 transition-colors flex items-center gap-1 cursor-pointer ml-1"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Logout</span>
@@ -115,7 +151,7 @@ export default function Navbar() {
 
             <Link
               href="/#verify"
-              className="inline-flex items-center gap-2 bg-[#171e19] hover:bg-black text-white font-satoshi text-sm font-medium px-5 sm:px-6 py-2.5 rounded-full transition-all hover:scale-105 shadow-sm active:scale-95"
+              className="inline-flex items-center gap-2 bg-[#171e19] hover:bg-black text-white font-satoshi text-sm font-medium px-4 sm:px-6 py-2.5 rounded-full transition-all hover:scale-105 shadow-sm active:scale-95 text-xs sm:text-sm"
             >
               <span>Run RC Check</span>
               <ArrowRight className="w-4 h-4 text-[#ffe17c]" />
@@ -129,8 +165,22 @@ export default function Navbar() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
-        onLoginSuccess={(email) => setCurrentUser(email)}
+        onLoginSuccess={(email) => {
+          setCurrentUser(email);
+          fetchCredits(email);
+        }}
+      />
+
+      {/* Recharge Credits Modal */}
+      <RechargeModal
+        isOpen={isRechargeModalOpen}
+        onClose={() => setIsRechargeModalOpen(false)}
+        userEmail={currentUser || ''}
+        onSuccess={(newCredits) => {
+          setCredits(newCredits);
+        }}
       />
     </>
   );
 }
+

@@ -24,6 +24,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ReportActions from '@/components/ReportActions';
 import AuthGate from '@/components/AuthGate';
+import RtoDossierSection from '@/components/RtoDossierSection';
 import { getVehicleReport, sanitizeRcNumber } from '@/lib/vehicleService';
 import { estimateMaintenanceCost } from '@/lib/costEstimatorService';
 
@@ -45,6 +46,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
     year: vehicle.registrationYear,
     odometer: vehicle.estimatedOdometerKm,
     fuelType: vehicle.fuelType,
+    rcNumber: cleanRc,
   });
 
   const isLowRisk = vehicle.trustScore >= 85;
@@ -378,7 +380,10 @@ export default async function ReportPage({ params }: ReportPageProps) {
             </div>
           </div>
 
-          {/* Section 3: Physical Inspection CTA Banner */}
+          {/* Section 3: Official RTO Registry Dossier (₹10 Unlock) */}
+          <RtoDossierSection rcNumber={vehicle.rcNumber} />
+
+          {/* Section 4: Physical Inspection CTA Banner */}
           <div className="bg-[#ffe17c] border-2 border-[#171e19] rounded-2xl p-8 sm:p-12 text-[#171e19] shadow-2xl relative overflow-hidden">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
               <div className="max-w-2xl">

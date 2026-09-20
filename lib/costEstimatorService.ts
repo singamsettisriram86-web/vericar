@@ -1,5 +1,6 @@
 // lib/costEstimatorService.ts
 import OpenAI from 'openai';
+import { prisma } from './prisma';
 
 export interface MaintenanceItem {
   name: string;
@@ -27,7 +28,23 @@ export async function estimateMaintenanceCost(params: {
   year: number;
   odometer: number;
   fuelType: string;
+  rcNumber?: string;
 }): Promise<MaintenanceEstimateResult> {
+  // 1. Cost Saver: Check if Supabase already has the cached DeepSeek estimate for this RC
+  if (params.rcNumber) {
+    try {
+      const existing = await prisma.vehicle.findUnique({
+        where: { rcNumber: params.rcNumber },
+        select: { maintenanceDetails: true },
+      });
+      if (existing?.maintenanceDetails) {
+        return JSON.parse(existing.maintenanceDetails) as MaintenanceEstimateResult;
+      }
+    } catch (err) {
+      console.warn('Database maintenance cache read notice:', err);
+    }
+  }
+
   const deepseekKey = process.env.DEEPSEEK_API_KEY;
   const openaiKey = process.env.OPENAI_API_KEY;
 
@@ -82,7 +99,18 @@ Respond strictly in valid JSON matching this schema:
 
       const parsed = JSON.parse(response.choices[0].message.content || '{}');
       if (parsed.annualMaintenanceCostINR) {
-        return parsed as MaintenanceEstimateResult;
+        const result = parsed as MaintenanceEstimateResult;
+        if (params.rcNumber) {
+          try {
+            await prisma.vehicle.update({
+              where: { rcNumber: params.rcNumber },
+              data: { maintenanceDetails: JSON.stringify(result) },
+            });
+          } catch (updateErr) {
+            console.warn('Could not cache maintenanceDetails to DB:', updateErr);
+          }
+        }
+        return result;
       }
     } catch (err) {
       console.warn('AI maintenance estimator error, using heuristic model:', err);
@@ -164,7 +192,7 @@ Respond strictly in valid JSON matching this schema:
   const riskTier: 'LOW' | 'MODERATE' | 'HIGH' =
     vehicleAge > 7 || params.odometer > 90000 ? 'HIGH' : (vehicleAge > 4 || params.odometer > 60000 ? 'MODERATE' : 'LOW');
 
-  return {
+  const finalResult: MaintenanceEstimateResult = {
     annualMaintenanceCostINR: annualRounded,
     monthlyEstimateINR: monthly,
     costPerKmINR: costPerKm,
@@ -174,4 +202,18 @@ Respond strictly in valid JSON matching this schema:
     detailedItems,
     modelRecommendation: `Inspect ${isDiesel ? 'turbocharger boost pipes and EGR valve' : 'throttle body, spark plugs, and clutch bite point'} during the pre-purchase physical inspection.`,
   };
+
+  if (params.rcNumber) {
+    try {
+      await prisma.vehicle.update({
+        where: { rcNumber: params.rcNumber },
+        data: { maintenanceDetails: JSON.stringify(finalResult) },
+      });
+    } catch {
+      // ignore
+    }
+  }
+
+  return finalResult;
 }
+

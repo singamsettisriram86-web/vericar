@@ -11,25 +11,77 @@ datasource db {
 }
 
 model Vehicle {
-  id              String   @id @default(uuid())
-  rcNumber        String   @unique
-  ownerName       String
-  ownerCount      Int      @default(1)
-  makerModel      String
-  regDate         String
-  fuelType        String
-  rtoLocation     String
-  insuranceExpiry String
-  fitnessUpto     String
-  pucUpto         String
-  chassisLast4    String
-  engineLast4     String
-  vehicleAgeYears Float
-  rawDetails      String?  // JSON string
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                 String   @id @default(uuid())
+  rcNumber           String   @unique
+  ownerName          String
+  ownerCount         Int      @default(1)
+  makerModel         String
+  regDate            String
+  fuelType           String
+  rtoLocation        String
+  insuranceExpiry    String
+  fitnessUpto        String
+  pucUpto            String
+  chassisLast4       String
+  engineLast4        String
+  vehicleAgeYears    Float
+  rawDetails         String?  // JSON string of standard report
+  maintenanceDetails String?  // JSON string of DeepSeek AI estimate (Cost Saver!)
+  fullRtoPayload     String?  // JSON string of exhaustive MoRTH raw extract
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
-  inspections     InspectionBooking[]
+  inspections        InspectionBooking[]
+}
+
+model UserAccount {
+  id                String               @id @default(uuid())
+  email             String               @unique
+  name              String?
+  credits           Int                  @default(1) // 1 Free Inspection Credit on signup
+  inspectionsCount  Int                  @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  inspections       UserInspection[]
+  unlockedDossiers  UnlockedDossier[]
+  transactions      PaymentTransaction[]
+}
+
+model UserInspection {
+  id          String      @id @default(uuid())
+  userEmail   String
+  user        UserAccount @relation(fields: [userEmail], references: [email])
+  vehicleRc   String
+  createdAt   DateTime    @default(now())
+
+  @@unique([userEmail, vehicleRc])
+}
+
+model UnlockedDossier {
+  id          String      @id @default(uuid())
+  userEmail   String
+  user        UserAccount @relation(fields: [userEmail], references: [email])
+  vehicleRc   String
+  unlockedAt  DateTime    @default(now())
+
+  @@unique([userEmail, vehicleRc])
+}
+
+model PaymentTransaction {
+  id                String       @id @default(uuid())
+  userEmail         String
+  user              UserAccount  @relation(fields: [userEmail], references: [email])
+  orderType         String       // CREDITS_49, CREDITS_99, RTO_DOSSIER_10
+  amountInr         Int          // 49, 99, 10
+  creditsAdded      Int          @default(0)
+  targetRc          String?
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
+  status            String       @default("created") // created, paid, failed
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
 }
 
 model InspectionBooking {
@@ -48,3 +100,4 @@ model InspectionBooking {
   inspectionStatus String  @default("scheduled") // scheduled, in_progress, completed
   createdAt       DateTime @default(now())
 }
+

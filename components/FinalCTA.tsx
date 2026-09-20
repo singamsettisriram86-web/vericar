@@ -5,17 +5,20 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ShieldCheck, Car, Check } from 'lucide-react';
 import LoginModal from './LoginModal';
+import RechargeModal from './RechargeModal';
 
 export default function FinalCTA() {
   const [rcInput, setRcInput] = useState('');
   const [submittedWaitlist, setSubmittedWaitlist] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isRechargeModalOpen, setIsRechargeModalOpen] = useState(false);
   const [pendingRc, setPendingRc] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const router = useRouter();
 
-  const handleAction = (e: React.FormEvent) => {
-    e.preventDefault();
-    const clean = rcInput.trim().toUpperCase();
+  const handleAction = async (e: React.FormEvent, customRc?: string) => {
+    if (e) e.preventDefault();
+    const clean = (customRc || rcInput).trim().toUpperCase();
     if (!clean) return;
 
     if (clean.includes('@')) {
@@ -33,9 +36,33 @@ export default function FinalCTA() {
       return;
     }
 
-    // RC lookup
-    router.push(`/report/${encodeURIComponent(clean)}`);
+    setUserEmail(existingUser);
+
+    // Gate 2: Check credits
+    try {
+      const creditRes = await fetch('/api/user/credits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: existingUser,
+          rcNumber: clean,
+        }),
+      });
+
+      const creditData = await creditRes.json();
+
+      if (!creditRes.ok || !creditData.success) {
+        setPendingRc(clean);
+        setIsRechargeModalOpen(true);
+        return;
+      }
+
+      router.push(`/report/${encodeURIComponent(clean)}`);
+    } catch {
+      router.push(`/report/${encodeURIComponent(clean)}`);
+    }
   };
+
 
   return (
     <>
@@ -119,6 +146,24 @@ export default function FinalCTA() {
         onClose={() => setIsAuthModalOpen(false)}
         pendingRc={pendingRc}
         initialMode="signup"
+        onLoginSuccess={(email) => {
+          setUserEmail(email);
+          if (pendingRc) {
+            handleAction(undefined as any, pendingRc);
+          }
+        }}
+      />
+
+      <RechargeModal
+        isOpen={isRechargeModalOpen}
+        onClose={() => setIsRechargeModalOpen(false)}
+        userEmail={userEmail}
+        pendingRc={pendingRc}
+        onSuccess={() => {
+          if (pendingRc) {
+            router.push(`/report/${encodeURIComponent(pendingRc)}`);
+          }
+        }}
       />
     </>
   );
