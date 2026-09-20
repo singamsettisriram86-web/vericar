@@ -28,11 +28,19 @@ export async function estimateMaintenanceCost(params: {
   odometer: number;
   fuelType: string;
 }): Promise<MaintenanceEstimateResult> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const deepseekKey = process.env.DEEPSEEK_API_KEY;
+  const openaiKey = process.env.OPENAI_API_KEY;
+
+  const apiKey = deepseekKey || openaiKey;
+  const isDeepSeek = Boolean(deepseekKey && deepseekKey.startsWith('sk-'));
+  const baseURL = isDeepSeek
+    ? (process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com')
+    : undefined;
+  const model = isDeepSeek ? 'deepseek-chat' : 'gpt-4o-mini';
 
   if (apiKey && apiKey.trim().length > 10 && !apiKey.includes('your_key')) {
     try {
-      const openai = new OpenAI({ apiKey });
+      const client = new OpenAI({ apiKey, baseURL });
       const prompt = `You are a veteran Indian automotive service consultant.
 Given vehicle:
 - Make: ${params.make}
@@ -63,9 +71,12 @@ Respond strictly in valid JSON matching this schema:
   "modelRecommendation": "Tip for used car buyers inspecting this specific model"
 }`;
 
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [{ role: 'user', content: prompt }],
+      const response = await client.chat.completions.create({
+        model,
+        messages: [
+          { role: 'system', content: 'You are an Indian car maintenance expert. Output only valid JSON.' },
+          { role: 'user', content: prompt }
+        ],
         response_format: { type: 'json_object' },
       });
 
@@ -73,8 +84,8 @@ Respond strictly in valid JSON matching this schema:
       if (parsed.annualMaintenanceCostINR) {
         return parsed as MaintenanceEstimateResult;
       }
-    } catch {
-      // Fallback to intelligent Indian heuristic matrix
+    } catch (err) {
+      console.warn('AI maintenance estimator error, using heuristic model:', err);
     }
   }
 
