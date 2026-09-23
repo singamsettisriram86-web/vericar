@@ -27,23 +27,51 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    // 1. Check local session
+    // 1. Check cookies first (set immediately by OAuth callback redirect)
+    const getCookie = (name: string) => {
+      if (typeof document === 'undefined') return null;
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    };
+
+    const cookieEmail = getCookie('vericar_user_email');
+    if (cookieEmail) {
+      localStorage.setItem('vericar_user_email', cookieEmail);
+      setCurrentUser(cookieEmail);
+      fetchCredits(cookieEmail);
+    }
+
+    // 2. Check local storage session
     const local = localStorage.getItem('vericar_user_email');
-    if (local) {
+    if (local && !cookieEmail) {
       setCurrentUser(local);
       fetchCredits(local);
     }
 
-    // 2. Check Supabase auth session
+    // 3. Listen to Supabase auth state change
     try {
       const supabase = createClient();
       supabase.auth.getUser().then(({ data }) => {
         if (data?.user?.email) {
-          setCurrentUser(data.user.email);
-          localStorage.setItem('vericar_user_email', data.user.email);
-          fetchCredits(data.user.email);
+          const userEmail = data.user.email.toLowerCase();
+          setCurrentUser(userEmail);
+          localStorage.setItem('vericar_user_email', userEmail);
+          fetchCredits(userEmail);
         }
       });
+
+      const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session?.user?.email) {
+          const userEmail = session.user.email.toLowerCase();
+          setCurrentUser(userEmail);
+          localStorage.setItem('vericar_user_email', userEmail);
+          fetchCredits(userEmail);
+        }
+      });
+
+      return () => {
+        authListener?.subscription.unsubscribe();
+      };
     } catch {
       // ignore
     }
