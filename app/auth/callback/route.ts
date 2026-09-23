@@ -36,12 +36,14 @@ export async function GET(request: Request) {
 
     if (!error && data?.user?.email) {
       const email = data.user.email.toLowerCase();
+
+      // Works for both Google OAuth AND email/password confirmation clicks
       const displayName =
         data.user.user_metadata?.full_name ||
         data.user.user_metadata?.name ||
         email.split('@')[0];
 
-      // Ensure user account exists in Supabase DB with 1 Free Credit
+      // Ensure user account exists in DB with 1 Free Credit on first sign-up
       try {
         await prisma.userAccount.upsert({
           where: { email },
@@ -53,10 +55,10 @@ export async function GET(request: Request) {
           },
         });
       } catch (dbErr) {
-        console.warn('Could not upsert user account on oauth callback:', dbErr);
+        console.warn('Could not upsert user account on auth callback:', dbErr);
       }
 
-      // Build redirect response and attach user session cookies so client immediately reflects it
+      // Set session cookies so client-side Navbar immediately shows user info
       const response = NextResponse.redirect(`${origin}${next}`);
       response.cookies.set('vericar_user_email', email, { path: '/', maxAge: 60 * 60 * 24 * 30 });
       response.cookies.set('vericar_user_name', displayName, { path: '/', maxAge: 60 * 60 * 24 * 30 });
@@ -64,7 +66,6 @@ export async function GET(request: Request) {
     }
   }
 
-  // Fallback return to home
-  return NextResponse.redirect(`${origin}/`);
+  // Fallback — redirect to login with an error hint
+  return NextResponse.redirect(`${origin}/login`);
 }
-
