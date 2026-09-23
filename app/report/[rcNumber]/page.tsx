@@ -160,11 +160,11 @@ export default async function ReportPage({ params }: ReportPageProps) {
             </div>
           </div>
 
-          {/* Section 1: RTO Forensic Intelligence */}
+          {/* Section 1: Government RTO Registration Report */}
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-[#171e19]/10">
               <h2 className="font-anton text-2xl sm:text-3xl text-[#171e19] tracking-tight">
-                01 // SOVEREIGN RTO REGISTRY FORENSICS
+                01 // GOVT RTO REGISTRATION REPORT
               </h2>
               <span className="font-satoshi text-xs text-green-700 font-bold uppercase tracking-wider flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4" />
@@ -273,11 +273,14 @@ export default async function ReportPage({ params }: ReportPageProps) {
             </div>
           </div>
 
-          {/* Section 2: AI Maintenance Cost Projection */}
+          {/* Section 2: Complete Official RTO Extract (MoRTH ₹39 Unlock) */}
+          <RtoDossierSection rcNumber={vehicle.rcNumber} />
+
+          {/* Section 3: AI Maintenance Cost Projection */}
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-[#171e19]/10">
               <h2 className="font-anton text-2xl sm:text-3xl text-[#171e19] tracking-tight">
-                02 // AI ANNUAL MAINTENANCE PROJECTIONS
+                03 // AI ANNUAL MAINTENANCE PROJECTIONS
               </h2>
               <span className="px-2.5 py-0.5 bg-[#ffe17c] text-[#171e19] font-anton text-xs rounded">
                 INDIAN MARKET MODEL
@@ -379,9 +382,6 @@ export default async function ReportPage({ params }: ReportPageProps) {
               </div>
             </div>
           </div>
-
-          {/* Section 3: Official RTO Registry Dossier (₹10 Unlock) */}
-          <RtoDossierSection rcNumber={vehicle.rcNumber} />
 
           {/* Section 4: Physical Inspection CTA Banner */}
           <div className="bg-[#ffe17c] border-2 border-[#171e19] rounded-2xl p-8 sm:p-12 text-[#171e19] shadow-2xl relative overflow-hidden">

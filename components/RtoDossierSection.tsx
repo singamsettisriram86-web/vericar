@@ -194,7 +194,7 @@ export default function RtoDossierSection({
         <div>
           <div className="flex items-center gap-2">
             <h2 className="font-anton text-2xl sm:text-3xl text-[#171e19] tracking-tight">
-              03 // COMPLETE OFFICIAL RTO EXTRACT (MoRTH)
+              02 // COMPLETE OFFICIAL RTO EXTRACT (MoRTH)
             </h2>
             {isUnlocked ? (
               <span className="px-2.5 py-0.5 bg-green-100 text-green-800 font-anton text-xs rounded flex items-center gap-1">
