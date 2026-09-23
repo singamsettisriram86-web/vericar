@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Download, Share2, Printer, ShieldAlert, Sparkles, Check } from 'lucide-react';
+import { Download, Share2, Printer, ShieldAlert, Sparkles, Check, ArrowRight } from 'lucide-react';
 
 interface ReportActionsProps {
   rcNumber: string;
@@ -80,29 +80,36 @@ export default function ReportActions({
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={handlePrint}
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#171e19] hover:bg-black text-white hover:text-[#ffe17c] font-anton text-sm rounded-xl border border-[#171e19] transition-all hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer"
-        >
-          <Download className="w-4 h-4 text-[#ffe17c]" />
-          <span>DOWNLOAD CERTIFIED PDF</span>
-        </button>
+      {/* High-Converting ₹39 Full Details & Certified Extract Action Bar */}
+      <div className="p-4 sm:p-5 bg-[#171e19] text-white rounded-2xl border-2 border-[#171e19] shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 bg-[#ffe17c] text-[#171e19] font-anton text-xs rounded tracking-wider">
+              OFFICIAL SOVEREIGN DOSSIER
+            </span>
+            <span className="font-satoshi text-xs text-white/70">
+              Complete VAHAN MoRTH Extract
+            </span>
+          </div>
+          <h3 className="font-anton text-xl sm:text-2xl text-white tracking-wide">
+            WANT THE UNMASKED RTO SHEET & OFFICIAL CERTIFIED PDF?
+          </h3>
+          <p className="font-satoshi text-xs text-white/80 max-w-xl">
+            Get the full unmasked 17-digit VIN/Chassis number, engine number, registered owner father&apos;s name, exact RTO home address, tax validity, and the downloadable certified PDF report.
+          </p>
+        </div>
 
         <button
-          onClick={handleWhatsAppShare}
-          className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-satoshi text-xs font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer uppercase tracking-wider"
+          onClick={() => {
+            const el = document.getElementById('rto-dossier');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-base sm:text-lg px-7 py-4 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-xl shrink-0 cursor-pointer"
         >
-          <span>Share via WhatsApp</span>
-        </button>
-
-        <button
-          onClick={handlePrint}
-          className="hidden sm:inline-flex items-center gap-2 px-4 py-3.5 bg-white border border-[#171e19]/20 hover:border-[#171e19] text-[#171e19] font-satoshi text-xs font-bold rounded-xl transition-all cursor-pointer"
-        >
-          <Printer className="w-4 h-4" />
-          <span>Print Dossier</span>
+          <span>VIEW FULL RTO DETAILS (₹39)</span>
+          <ArrowRight className="w-5 h-5 text-[#171e19] stroke-[2.5]" />
         </button>
       </div>
     </div>
