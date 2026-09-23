@@ -46,7 +46,7 @@ export default function BentoGrid() {
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
                 <span className="font-anton text-sm tracking-widest text-[#171e19]/40 uppercase">
-                  MODULE 01 // REGISTRY FORENSICS
+                  RTO REGISTRATION CHECK
                 </span>
                 <span className="px-3 py-1 bg-[#171e19] text-[#ffe17c] font-anton text-xs rounded-md">
                   VAHAN API LIVE
@@ -54,30 +54,42 @@ export default function BentoGrid() {
               </div>
 
               <h3 className="font-anton text-3xl sm:text-4xl text-[#171e19] tracking-tight leading-tight mb-3">
-                SOVEREIGN VEHICLE REGISTRATION AUDIT
+                VEHICLE REGISTRATION AUDIT
               </h3>
               <p className="font-satoshi text-[#171e19]/75 text-base max-w-xl leading-relaxed">
                 Connect directly into Indian RTO servers. Uncover authentic owner count, blacklist flags, hypothecation status, and emission validity without seller interference.
               </p>
             </div>
 
-            {/* Abstract UI element: code snippet / telemetry log in bg-dark */}
-            <div className="mt-8 bg-[#171e19] rounded-xl p-5 border border-[#171e19] text-white font-mono text-xs overflow-x-auto shadow-lg relative">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-white/40">
-                <span className="text-white/60 font-sans text-xs">Terminal: vahan.parivahan.gov.in/telemetry</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[10px] text-green-400 font-bold">200 OK</span>
+            {/* Clean consumer-friendly RTO summary card */}
+            <div className="mt-8 bg-white rounded-xl p-5 border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#171e19]">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#171e19]/10">
+                <span className="font-anton text-xs text-[#171e19] tracking-wider">
+                  OFFICIAL RTO STATUS CHECK // KA01AB1234
+                </span>
+                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-green-50 border border-green-200 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="text-[10px] text-green-700 font-bold uppercase">MoRTH Verified</span>
                 </div>
               </div>
-              <div className="space-y-1 text-white/80">
-                <p className="text-[#ffe17c]">&gt; GET /api/rc/KA01AB1234 --verify-chassis</p>
-                <p className="text-white/60">&#123;</p>
-                <p className="pl-4"><span className="text-[#ffe17c]">&quot;rc_status&quot;</span>: <span className="text-green-400">&quot;ACTIVE&quot;</span>,</p>
-                <p className="pl-4"><span className="text-[#ffe17c]">&quot;owner_sequence&quot;</span>: <span className="text-white">1</span>,</p>
-                <p className="pl-4"><span className="text-[#ffe17c]">&quot;hypothecation&quot;</span>: <span className="text-white">&quot;HDFC Bank Ltd (NOC ISSUED)&quot;</span>,</p>
-                <p className="pl-4"><span className="text-[#ffe17c]">&quot;blacklist_alert&quot;</span>: <span className="text-green-400">false</span></p>
-                <p className="text-white/60">&#125;</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="p-3 bg-[#f8f9fa] rounded-lg border border-[#171e19]/10">
+                  <span className="font-satoshi text-[10px] uppercase font-bold text-[#171e19]/50 block">Registration</span>
+                  <span className="font-anton text-sm text-green-700">ACTIVE & VALID</span>
+                </div>
+                <div className="p-3 bg-[#f8f9fa] rounded-lg border border-[#171e19]/10">
+                  <span className="font-satoshi text-[10px] uppercase font-bold text-[#171e19]/50 block">Owner Chain</span>
+                  <span className="font-anton text-sm text-[#171e19]">1ST OWNER</span>
+                </div>
+                <div className="p-3 bg-[#f8f9fa] rounded-lg border border-[#171e19]/10">
+                  <span className="font-satoshi text-[10px] uppercase font-bold text-[#171e19]/50 block">Bank Loan</span>
+                  <span className="font-anton text-sm text-[#171e19]">NOC CLEARED</span>
+                </div>
+                <div className="p-3 bg-[#f8f9fa] rounded-lg border border-[#171e19]/10">
+                  <span className="font-satoshi text-[10px] uppercase font-bold text-[#171e19]/50 block">Challans</span>
+                  <span className="font-anton text-sm text-green-700">0 PENDING</span>
+                </div>
               </div>
             </div>
           </div>
@@ -137,7 +149,7 @@ export default function BentoGrid() {
               </div>
 
               <h3 className="font-anton text-3xl sm:text-4xl text-[#171e19] tracking-tight leading-tight mb-3">
-                150-POINT INSPECTION
+                VEHICLE INSPECTION
               </h3>
               <p className="font-satoshi text-[#171e19]/75 text-sm leading-relaxed">
                 Doorstep mechanics equipped with magnetic paint gauges, compression testers, and OBD-II scanners.

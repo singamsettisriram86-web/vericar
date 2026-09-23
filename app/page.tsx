@@ -5,7 +5,6 @@ import ProblemSolutionSection from '@/components/ProblemSolutionSection';
 import AbstractUIMockup from '@/components/AbstractUIMockup';
 import BentoGrid from '@/components/BentoGrid';
 import HowItWorks from '@/components/HowItWorks';
-import Testimonials from '@/components/Testimonials';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
 
@@ -18,9 +17,9 @@ export default function HomePage() {
       <AbstractUIMockup />
       <BentoGrid />
       <HowItWorks />
-      <Testimonials />
       <FinalCTA />
       <Footer />
     </main>
   );
 }
+

@@ -390,7 +390,7 @@ export default function BookingPage({ params }: BookingPageProps) {
 
                   <div className="space-y-3 pb-4 border-b border-white/10 font-satoshi text-xs text-white/70">
                     <div className="flex justify-between text-white">
-                      <span className="font-bold">150-Point Doorstep Audit</span>
+                      <span className="font-bold">Doorstep Vehicle Inspection</span>
                       <span>₹422.88</span>
                     </div>
                     <div className="flex justify-between">

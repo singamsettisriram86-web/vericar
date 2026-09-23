@@ -13,7 +13,7 @@ const anton = Anton({
 export const metadata: Metadata = {
   title: 'VERICAR | Uncover The Truth Before You Buy Any Used Car',
   description:
-    'India\'s high-precision used car verification platform. Instant Vahan RC check, AI annual maintenance projections, and certified 150-point doorstep inspections.',
+    'India\'s high-precision used car verification platform. Instant Vahan RC check, AI annual maintenance projections, and certified doorstep vehicle inspections.',
   icons: {
     icon: '/favicon.ico',
   },

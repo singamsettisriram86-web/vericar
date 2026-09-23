@@ -92,7 +92,7 @@ export default function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#171e19]/15 bg-white/80 shadow-xs mb-8 backdrop-blur-xs">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ffe17c] animate-pulse" />
             <span className="font-satoshi text-xs uppercase tracking-widest font-bold text-[#171e19]">
-              INDIA&apos;S SOVEREIGN VEHICLE INTELLIGENCE PLATFORM
+              INDIA&apos;S TRUSTED VEHICLE INTELLIGENCE PLATFORM
             </span>
           </div>
 
@@ -106,7 +106,7 @@ export default function HeroSection() {
 
           {/* Subheadline */}
           <p className="font-satoshi text-lg sm:text-xl text-[#171e19]/75 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-            Instant Vahan government registry audit, AI-forecasted annual maintenance costs in ₹ INR, and 150-point physical mechanic inspections for first-time used car buyers in India.
+            Instant Vahan government registry audit, AI-forecasted annual maintenance costs in ₹ INR, and certified doorstep vehicle inspections for used car buyers in India.
           </p>
 
           {/* Primary RC Lookup Form */}
@@ -191,7 +191,7 @@ export default function HeroSection() {
             <div className="flex items-center justify-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-[#171e19]" />
               <span className="font-satoshi text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
-                150-Point Physical Audit
+                Doorstep Vehicle Inspection
               </span>
             </div>
             <div className="flex items-center justify-center gap-2">

@@ -23,7 +23,7 @@ const PROBLEMS = [
 
 const SOLUTIONS = [
   {
-    title: 'Sovereign Vahan RC Forensics',
+    title: 'Government RTO Registration Report',
     detail: 'Verify genuine ownership chain, hypothecation NOC status, RTO blacklist flags, and authentic fitness validity in seconds.',
   },
   {
@@ -31,7 +31,7 @@ const SOLUTIONS = [
     detail: 'Predict realistic annual ownership expenditure broken down by engine oil, brake pads, tyres, and typical Indian road wear.',
   },
   {
-    title: '150-Point Doorstep Mechanic Audit',
+    title: 'Doorstep Vehicle Inspection',
     detail: 'Certified mechanics inspect paint thickness via digital gauges, OBD-II ECU codes, engine compression, and underbody rust.',
   },
   {

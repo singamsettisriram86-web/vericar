@@ -207,7 +207,7 @@ export default function RtoDossierSection({
             )}
           </div>
           <p className="font-satoshi text-xs text-[#171e19]/60 mt-1">
-            Raw sovereign registry extract direct from national vehicle databases.
+            Official registry extract direct from national vehicle databases.
           </p>
         </div>
 

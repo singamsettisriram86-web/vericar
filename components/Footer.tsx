@@ -26,7 +26,7 @@ export default function Footer() {
             <ul className="space-y-2.5 font-satoshi text-xs text-white/70">
               <li><Link href="/#verify" className="hover:text-white transition-colors">Vahan RC Check</Link></li>
               <li><Link href="/#features" className="hover:text-white transition-colors">AI Maintenance Forecaster</Link></li>
-              <li><Link href="/#features" className="hover:text-white transition-colors">Doorstep 150-Point Inspection</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Doorstep Vehicle Inspection</Link></li>
               <li><Link href="/#features" className="hover:text-white transition-colors">e-Challan & Blacklist Scan</Link></li>
             </ul>
           </div>

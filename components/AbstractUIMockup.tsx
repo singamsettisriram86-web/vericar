@@ -78,7 +78,7 @@ export default function AbstractUIMockup() {
                   </div>
                   <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[#171e19]/70 hover:bg-[#171e19]/5 font-satoshi text-xs font-medium">
                     <Wrench className="w-4 h-4 text-[#171e19]/40" />
-                    <span>150-Point Checklist</span>
+                    <span>Vehicle Inspection</span>
                   </div>
                   <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[#171e19]/70 hover:bg-[#171e19]/5 font-satoshi text-xs font-medium">
                     <FileText className="w-4 h-4 text-[#171e19]/40" />

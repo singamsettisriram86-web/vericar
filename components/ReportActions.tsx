@@ -30,7 +30,7 @@ export default function ReportActions({
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 bg-[#ffe17c] text-[#171e19] font-anton text-xs rounded tracking-wider">
-              OFFICIAL SOVEREIGN DOSSIER
+              OFFICIAL RTO DOSSIER
             </span>
             <span className="font-satoshi text-xs text-white/70">
               Complete VAHAN MoRTH Extract

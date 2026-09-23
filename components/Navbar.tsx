@@ -123,49 +123,50 @@ export default function Navbar() {
             >
               Protocol
             </Link>
-            <Link
-              href="/#reviews"
-              className="font-satoshi text-sm font-medium text-[#171e19]/80 hover:text-[#171e19] transition-colors uppercase tracking-wider"
-            >
-              Verifications
-            </Link>
           </nav>
 
           {/* Right action group */}
-          <div className="flex items-center gap-3 sm:gap-5">
+          <div className="flex items-center gap-2 sm:gap-4">
             
             {currentUser ? (
               <div className="flex items-center gap-2 sm:gap-3">
-                {/* Credits pill */}
+                {/* Clear prominent credits pill */}
                 <button
                   onClick={() => setIsRechargeModalOpen(true)}
-                  title="Click to recharge credits"
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-satoshi text-xs font-bold transition-all border cursor-pointer ${
+                  title="Click to recharge inspection credits"
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border-2 font-anton text-xs sm:text-sm tracking-wider transition-all hover:scale-[1.02] active:scale-95 shadow-xs cursor-pointer ${
                     credits === 0
                       ? 'bg-amber-50 border-amber-300 text-amber-900 hover:bg-amber-100'
-                      : 'bg-[#ffe17c]/25 hover:bg-[#ffe17c]/40 border-[#171e19]/20 text-[#171e19]'
+                      : 'bg-[#ffe17c] border-[#171e19] text-[#171e19] hover:bg-[#ffdc5c]'
                   }`}
                 >
-                  <span>⚡ {credits !== null ? credits : '...'} {credits === 1 ? 'Credit' : 'Credits'}</span>
-                  <span className="text-[10px] uppercase font-bold text-[#171e19]/60 underline hidden sm:inline">
-                    +Recharge
+                  <span className="flex items-center gap-1">
+                    <span>⚡</span>
+                    <span>{credits !== null ? credits : '0'}</span>
+                    <span className="font-satoshi text-xs font-bold uppercase">{credits === 1 ? 'CREDIT' : 'CREDITS'}</span>
+                  </span>
+                  <span className="px-1.5 py-0.5 bg-[#171e19] text-white text-[10px] rounded font-satoshi font-bold uppercase tracking-wider">
+                    +RECHARGE
                   </span>
                 </button>
 
-                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#f8f9fa] border border-[#171e19]/15 rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-satoshi text-xs font-bold text-[#171e19] max-w-[130px] truncate">
+                {/* Account details chip */}
+                <div className="flex items-center gap-2 px-2.5 py-1.5 sm:px-3 sm:py-1.5 bg-[#f8f9fa] border border-[#171e19]/20 rounded-xl">
+                  <div className="w-5 h-5 rounded-full bg-[#171e19] text-[#ffe17c] font-anton text-[10px] flex items-center justify-center shrink-0">
+                    {currentUser.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="font-satoshi text-xs font-bold text-[#171e19] max-w-[90px] sm:max-w-[140px] truncate">
                     {currentUser}
                   </span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
                 </div>
 
                 <button
                   onClick={handleLogout}
                   title="Sign Out"
-                  className="font-satoshi text-xs font-semibold text-[#171e19]/60 hover:text-red-600 transition-colors flex items-center gap-1 cursor-pointer ml-1"
+                  className="p-2 text-[#171e19]/60 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
                 >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Logout</span>
+                  <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (

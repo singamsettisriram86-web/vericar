@@ -151,7 +151,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
             <div className="flex justify-between items-center pb-2 border-b border-black">
               <div>
                 <h1 className="font-anton text-2xl tracking-wider">VERICAR AUTOMOTIVE AUDIT CERTIFICATE</h1>
-                <p className="font-satoshi text-xs text-neutral-600">OFFICIAL SOVEREIGN VEHICLE VERIFICATION DOSSIER</p>
+                <p className="font-satoshi text-xs text-neutral-600">OFFICIAL VEHICLE REGISTRATION REPORT</p>
               </div>
               <div className="text-right">
                 <span className="font-mono text-xs font-bold">CERTIFICATE ID: VRC-{vehicle.rcNumber}</span>
@@ -394,7 +394,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
                   WANT A CERTIFIED MECHANIC TO AUDIT THIS EXACT CAR?
                 </h3>
                 <p className="font-satoshi text-base sm:text-lg text-[#171e19]/80 leading-relaxed">
-                  Book a doorstep 150-point inspection in Bengaluru, Delhi NCR, Mumbai, Hyderabad, or Chennai. Our technician will test compression, paint gauge micron levels, and check underbody frame alignment for just ₹499.
+                  Book a doorstep vehicle inspection in Bengaluru, Delhi NCR, Mumbai, Hyderabad, or Chennai. Our technician will test compression, paint gauge micron levels, and check underbody frame alignment for just ₹499.
                 </p>
               </div>
 
