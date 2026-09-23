@@ -36,9 +36,10 @@ export default function Footer() {
               SUPPORT & NETWORK
             </h4>
             <ul className="space-y-2.5 font-satoshi text-xs text-white/70">
-              <li><span className="text-white/40">Coverage: Bengaluru, Delhi NCR, Mumbai, Hyderabad, Chennai</span></li>
-              <li><span className="text-white/40">Support: support@vericar.in</span></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors font-medium text-[#ffe17c]">Contact Support</Link></li>
+              <li><span className="text-white/60">Email: support@vericar.online</span></li>
               <li><span className="text-white/40">Hours: 9:00 AM - 8:00 PM IST</span></li>
+              <li><span className="text-white/40">Coverage: Bengaluru, Delhi NCR, Mumbai, Hyderabad, Chennai</span></li>
             </ul>
           </div>
 
@@ -46,10 +47,11 @@ export default function Footer() {
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-satoshi text-xs text-white/40">
           <p>© {new Date().getFullYear()} VeriCar Technologies India. All rights reserved.</p>
-          <div className="flex gap-6">
-            <span>Terms of Service</span>
-            <span>Privacy Policy</span>
-            <span>Disclaimers</span>
+          <div className="flex flex-wrap gap-4 sm:gap-6">
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/refund" className="hover:text-white transition-colors">Refund & Cancellation</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
           </div>
         </div>
       </div>
