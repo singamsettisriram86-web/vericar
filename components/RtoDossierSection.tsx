@@ -91,20 +91,32 @@ export default function RtoDossierSection({
 
       // 1. Cashfree Live Checkout Flow
       if (orderData.paymentSessionId && typeof window !== 'undefined') {
-        const CashfreeSDK = (window as any).Cashfree;
+        let CashfreeSDK = (window as any).Cashfree;
+        if (!CashfreeSDK) {
+          await new Promise<void>((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
+            script.onload = () => resolve();
+            script.onerror = () => resolve();
+            document.head.appendChild(script);
+          });
+          CashfreeSDK = (window as any).Cashfree;
+        }
+
         if (CashfreeSDK) {
           const cashfree = CashfreeSDK({ mode: 'production' });
           cashfree.checkout({
             paymentSessionId: orderData.paymentSessionId,
             redirectTarget: '_modal',
           }).then(async (result: any) => {
+            setLoading(false);
             if (result?.error) {
               setErrorMsg(result.error.message || 'Payment was cancelled or failed.');
-              setLoading(false);
               return;
             }
 
             try {
+              setLoading(true);
               const verifyRes = await fetch('/api/payment/cashfree-verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -120,7 +132,8 @@ export default function RtoDossierSection({
                 setIsUnlocked(true);
                 window.location.reload();
               } else {
-                setErrorMsg(verifyData.message || 'Verification pending. Please refresh in a moment.');
+                setErrorMsg(verifyData.message || 'Verification pending. Refreshing...');
+                setTimeout(() => window.location.reload(), 1500);
               }
             } catch {
               window.location.reload();
@@ -216,6 +229,8 @@ export default function RtoDossierSection({
       if (rtoData.dossier) {
         setFullDossier(rtoData.dossier);
         setIsUnlocked(true);
+      } else {
+        window.location.reload();
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Verification error');
