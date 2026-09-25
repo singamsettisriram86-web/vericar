@@ -89,6 +89,50 @@ export default function RtoDossierSection({
         throw new Error(orderData.error || 'Failed to create payment order');
       }
 
+      // 1. Cashfree Live Checkout Flow
+      if (orderData.paymentSessionId && typeof window !== 'undefined') {
+        const CashfreeSDK = (window as any).Cashfree;
+        if (CashfreeSDK) {
+          const cashfree = CashfreeSDK({ mode: 'production' });
+          cashfree.checkout({
+            paymentSessionId: orderData.paymentSessionId,
+            redirectTarget: '_modal',
+          }).then(async (result: any) => {
+            if (result?.error) {
+              setErrorMsg(result.error.message || 'Payment was cancelled or failed.');
+              setLoading(false);
+              return;
+            }
+
+            try {
+              const verifyRes = await fetch('/api/payment/cashfree-verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  orderId: orderData.orderId,
+                  email: userEmail,
+                  plan: 'RTO_DOSSIER_39',
+                  targetRc: rcNumber,
+                }),
+              });
+              const verifyData = await verifyRes.json();
+              if (verifyData.success) {
+                setIsUnlocked(true);
+                window.location.reload();
+              } else {
+                setErrorMsg(verifyData.message || 'Verification pending. Please refresh in a moment.');
+              }
+            } catch {
+              window.location.reload();
+            } finally {
+              setLoading(false);
+            }
+          });
+          return;
+        }
+      }
+
+      // 2. Razorpay Fallback Flow
       const hasRealKey =
         orderData.keyId &&
         orderData.keyId.startsWith('rzp_') &&

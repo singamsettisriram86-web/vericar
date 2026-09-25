@@ -3,11 +3,12 @@ import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 import { prisma } from '@/lib/prisma';
 import { sanitizeRcNumber } from '@/lib/vehicleService';
+import { createCashfreeOrder } from '@/lib/cashfree';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email: rawEmail, plan, targetRc: rawRc } = body;
+    const { email: rawEmail, plan, targetRc: rawRc, phone } = body;
 
     if (!rawEmail || !rawEmail.includes('@')) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 });
@@ -38,10 +39,36 @@ export async function POST(request: Request) {
     const keyId = process.env.RAZORPAY_KEY_ID;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-    let orderId = `order_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    // Unique order ID (Cashfree requires <= 45 alphanumeric characters)
+    let orderId = `vcr_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    let paymentSessionId: string | null = null;
+    let gateway = 'cashfree';
 
-    // If Razorpay live/test keys are provided in environment
-    if (keyId && keySecret && !keyId.includes('placeholder')) {
+    // 1. Try Cashfree Live/Sandbox Order First
+    if (process.env.CASHFREE_APP_ID && process.env.CASHFREE_SECRET_KEY) {
+      try {
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.vericar.online';
+        const cfOrder = await createCashfreeOrder({
+          orderId,
+          orderAmount: amountInr,
+          customerEmail: email,
+          customerPhone: phone || '9441230144',
+          orderNote: plan === 'RTO_DOSSIER_39' ? `VeriCar RTO Extract - ${cleanRc}` : `VeriCar Credits - ${plan}`,
+          returnUrl: `${appUrl}/api/payment/cashfree-verify?order_id={order_id}&plan=${encodeURIComponent(plan)}&targetRc=${encodeURIComponent(cleanRc || '')}&email=${encodeURIComponent(email)}`,
+        });
+
+        if (cfOrder?.payment_session_id) {
+          paymentSessionId = cfOrder.payment_session_id;
+          gateway = 'cashfree';
+        }
+      } catch (cfErr) {
+        console.error('Cashfree order creation error:', cfErr);
+      }
+    }
+
+    // 2. Fallback to Razorpay if Cashfree was not configured
+    if (!paymentSessionId && keyId && keySecret && !keyId.includes('placeholder')) {
+      gateway = 'razorpay';
       try {
         const rzp = new Razorpay({
           key_id: keyId.trim(),
@@ -93,6 +120,8 @@ export async function POST(request: Request) {
       amountInr,
       amountPaise: amountInr * 100,
       currency: 'INR',
+      gateway,
+      paymentSessionId,
       keyId: keyId || 'rzp_test_placeholder',
       plan,
       targetRc: cleanRc,

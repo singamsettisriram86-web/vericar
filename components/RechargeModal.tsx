@@ -52,7 +52,54 @@ export default function RechargeModal({
         throw new Error(orderData.error || 'Failed to create payment order');
       }
 
-      // 2. Check if Razorpay SDK is available and keys are active
+      // 1. Cashfree Live Checkout Flow
+      if (orderData.paymentSessionId && typeof window !== 'undefined') {
+        const CashfreeSDK = (window as any).Cashfree;
+        if (CashfreeSDK) {
+          const cashfree = CashfreeSDK({ mode: 'production' });
+          cashfree.checkout({
+            paymentSessionId: orderData.paymentSessionId,
+            redirectTarget: '_modal',
+          }).then(async (result: any) => {
+            if (result?.error) {
+              setErrorMsg(result.error.message || 'Payment cancelled or failed.');
+              setLoading(false);
+              return;
+            }
+
+            try {
+              const verifyRes = await fetch('/api/payment/cashfree-verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  orderId: orderData.orderId,
+                  email: userEmail,
+                  plan: selectedPlan,
+                }),
+              });
+              const verifyData = await verifyRes.json();
+              if (verifyData.success) {
+                setSuccessMsg(`Successfully added ${selectedPlan === 'CREDITS_49' ? 3 : 8} credits!`);
+                setTimeout(() => {
+                  if (onSuccess) onSuccess(verifyData.credits || 0);
+                  onClose();
+                  window.location.reload();
+                }, 1000);
+              } else {
+                setErrorMsg(verifyData.message || 'Verification pending. Refreshing...');
+                setTimeout(() => window.location.reload(), 1500);
+              }
+            } catch {
+              window.location.reload();
+            } finally {
+              setLoading(false);
+            }
+          });
+          return;
+        }
+      }
+
+      // 2. Razorpay Fallback Flow
       const hasRealKey =
         orderData.keyId &&
         orderData.keyId.startsWith('rzp_') &&

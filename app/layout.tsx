@@ -31,6 +31,10 @@ export default function RootLayout({
       <body className="font-satoshi bg-[#ffffff] text-[#171e19] antialiased selection:bg-[#ffe17c] selection:text-[#171e19] min-h-screen flex flex-col">
         {children}
         <Script
+          src="https://sdk.cashfree.com/js/v3/cashfree.js"
+          strategy="afterInteractive"
+        />
+        <Script
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="lazyOnload"
         />

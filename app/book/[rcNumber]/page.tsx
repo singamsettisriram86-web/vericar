@@ -83,7 +83,59 @@ export default function BookingPage({ params }: BookingPageProps) {
         throw new Error(orderData.error || 'Failed to initialize payment');
       }
 
-      // 2. Confirm booking
+      // 1. Cashfree Live Checkout Flow
+      if (orderData.paymentSessionId && typeof window !== 'undefined') {
+        const CashfreeSDK = (window as any).Cashfree;
+        if (CashfreeSDK) {
+          const cashfree = CashfreeSDK({ mode: 'production' });
+          cashfree.checkout({
+            paymentSessionId: orderData.paymentSessionId,
+            redirectTarget: '_modal',
+          }).then(async (result: any) => {
+            if (result?.error) {
+              setErrorMsg(result.error.message || 'Payment was cancelled or failed.');
+              setLoading(false);
+              return;
+            }
+
+            try {
+              const confirmRes = await fetch('/api/inspection/confirm', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  vehicleRc: rcNumber,
+                  customerName: fullName,
+                  customerPhone: phone,
+                  customerEmail: email,
+                  city,
+                  inspectionDate: date,
+                  timeSlot,
+                  razorpayOrderId: orderData.orderId,
+                  razorpayPaymentId: `cf_${Date.now()}`,
+                }),
+              });
+
+              const confirmData = await confirmRes.json();
+              if (confirmData.success) {
+                setBookingSuccess({
+                  bookingId: confirmData.bookingId,
+                  orderId: orderData.orderId,
+                  mode: 'LIVE_CASHFREE',
+                });
+              } else {
+                setErrorMsg('Booking verification pending. Please check your SMS/email.');
+              }
+            } catch {
+              setErrorMsg('Unable to confirm booking. Please contact support.');
+            } finally {
+              setLoading(false);
+            }
+          });
+          return;
+        }
+      }
+
+      // 2. Fallback Confirm booking
       const confirmRes = await fetch('/api/inspection/confirm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

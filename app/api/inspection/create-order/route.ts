@@ -10,6 +10,39 @@ export async function POST(req: NextRequest) {
     const amountInr = 499;
     const amountPaise = amountInr * 100;
 
+    // 1. Try Cashfree Live Order
+    if (process.env.CASHFREE_APP_ID && process.env.CASHFREE_SECRET_KEY) {
+      try {
+        const { createCashfreeOrder } = await import('@/lib/cashfree');
+        const orderId = `vcr_insp_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.vericar.online';
+
+        const cfOrder = await createCashfreeOrder({
+          orderId,
+          orderAmount: amountInr,
+          customerEmail: body.email || 'customer@vericar.online',
+          customerPhone: body.phone || '9441230144',
+          customerName: customerName || 'Valued Buyer',
+          orderNote: `Doorstep Vehicle Inspection - ${rcNumber}`,
+          returnUrl: `${appUrl}/book/${encodeURIComponent(rcNumber)}?order_id={order_id}`,
+        });
+
+        if (cfOrder?.payment_session_id) {
+          return NextResponse.json({
+            success: true,
+            mode: 'LIVE_CASHFREE',
+            orderId,
+            paymentSessionId: cfOrder.payment_session_id,
+            amount: amountPaise,
+            amountInr,
+            currency: 'INR',
+          });
+        }
+      } catch (cfErr) {
+        console.error('Cashfree inspection order error:', cfErr);
+      }
+    }
+
     const razorpayKey = process.env.RAZORPAY_KEY_ID;
     const razorpaySecret = process.env.RAZORPAY_KEY_SECRET;
 
