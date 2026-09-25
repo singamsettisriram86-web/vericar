@@ -31,8 +31,8 @@ export async function createCashfreeOrder(params: CreateOrderParams) {
   const sanitizedCustomerId = `cust_${params.customerEmail.replace(/[^a-zA-Z0-9]/g, '').slice(0, 30)}_${Date.now().toString().slice(-4)}`;
 
   // Default phone fallback if user did not provide phone (Cashfree requires customer_phone to be 10 digits)
-  const rawPhone = (params.customerPhone || '9441230144').replace(/[^0-9]/g, '');
-  const cleanPhone = rawPhone.length === 10 ? rawPhone : '9441230144';
+  const rawPhone = (params.customerPhone || '').replace(/[^0-9]/g, '');
+  const cleanPhone = rawPhone.length === 10 ? rawPhone : '9999999999';
 
   const payload = {
     order_id: params.orderId,

@@ -52,7 +52,7 @@ export async function POST(request: Request) {
           orderId,
           orderAmount: amountInr,
           customerEmail: email,
-          customerPhone: phone || '9441230144',
+          customerPhone: phone || '',
           orderNote: plan === 'RTO_DOSSIER_39' ? `VeriCar RTO Extract - ${cleanRc}` : `VeriCar Credits - ${plan}`,
           returnUrl: `${appUrl}/api/payment/cashfree-verify?order_id={order_id}&plan=${encodeURIComponent(plan)}&targetRc=${encodeURIComponent(cleanRc || '')}&email=${encodeURIComponent(email)}`,
         });
