@@ -90,6 +90,23 @@ export default function Navbar() {
     setCredits(null);
   };
 
+  const handleRunRcCheck = (e: React.MouseEvent) => {
+    if (!currentUser) {
+      e.preventDefault();
+      setIsLoginModalOpen(true);
+    } else {
+      // If already on homepage, scroll smoothly to the RC input box and focus
+      if (typeof window !== 'undefined' && window.location.pathname === '/') {
+        const rcInput = (document.querySelector('input[placeholder*="KA"]') ||
+          document.querySelector('input[type="text"]')) as HTMLInputElement;
+        if (rcInput) {
+          e.preventDefault();
+          rcInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => rcInput.focus(), 250);
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -178,13 +195,25 @@ export default function Navbar() {
               </button>
             )}
 
-            <Link
-              href="/#verify"
-              className="inline-flex items-center gap-2 bg-[#171e19] hover:bg-black text-white font-satoshi text-sm font-medium px-4 sm:px-6 py-2.5 rounded-full transition-all hover:scale-105 shadow-sm active:scale-95 text-xs sm:text-sm"
-            >
-              <span>Run RC Check</span>
-              <ArrowRight className="w-4 h-4 text-[#ffe17c]" />
-            </Link>
+            {currentUser ? (
+              <Link
+                href="/#verify"
+                onClick={handleRunRcCheck}
+                className="inline-flex items-center gap-2 bg-[#171e19] hover:bg-black text-white font-satoshi text-sm font-medium px-4 sm:px-6 py-2.5 rounded-full transition-all hover:scale-105 shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
+              >
+                <span>Run RC Check</span>
+                <ArrowRight className="w-4 h-4 text-[#ffe17c]" />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={handleRunRcCheck}
+                className="inline-flex items-center gap-2 bg-[#171e19] hover:bg-black text-white font-satoshi text-sm font-medium px-4 sm:px-6 py-2.5 rounded-full transition-all hover:scale-105 shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
+              >
+                <span>Run RC Check</span>
+                <ArrowRight className="w-4 h-4 text-[#ffe17c]" />
+              </button>
+            )}
           </div>
 
         </div>
