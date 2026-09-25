@@ -143,12 +143,8 @@ export default function RechargeModal({
         });
         rzp.open();
       } else {
-        // Safe instant test/simulation fallback (for pre-live testing before live keys are pasted)
-        await verifyPayment({
-          orderId: orderData.orderId,
-          paymentId: `pay_sim_${Date.now()}`,
-          signature: 'simulated_valid_sig',
-        });
+        setErrorMsg('Payment gateway unavailable. Please refresh the page and try again.');
+        setLoading(false);
       }
     } catch (err: any) {
       console.error('Recharge error:', err);

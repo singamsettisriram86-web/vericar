@@ -24,7 +24,15 @@ export async function POST(request: Request) {
     const cleanRc = rawRc ? sanitizeRcNumber(rawRc) : null;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-    // If live signature verification is possible
+    // Block simulated/fake payment IDs and signatures
+    if (
+      (paymentId && (paymentId.startsWith('pay_sim') || paymentId.startsWith('sim_'))) ||
+      signature === 'simulated_valid_sig'
+    ) {
+      return NextResponse.json({ error: 'Invalid payment credentials' }, { status: 403 });
+    }
+
+    // Validate Razorpay signature if key is available
     if (keySecret && signature && orderId && paymentId) {
       const generatedSignature = crypto
         .createHmac('sha256', keySecret.trim())

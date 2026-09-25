@@ -182,12 +182,8 @@ export default function RtoDossierSection({
         });
         rzp.open();
       } else {
-        // Safe simulation fallback
-        await verifyDossierPayment({
-          orderId: orderData.orderId,
-          paymentId: `pay_sim_rto_${Date.now()}`,
-          signature: 'simulated_valid_sig',
-        });
+        setErrorMsg('Payment gateway unavailable. Please refresh the page and try again.');
+        setLoading(false);
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Payment initiation failed.');
