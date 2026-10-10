@@ -8,10 +8,10 @@ import LoginModal from './LoginModal';
 import RechargeModal from './RechargeModal';
 
 const SAMPLE_CHIPS = [
-  { label: 'AP05EN9264', desc: 'Honda Activa (Live)' },
-  { label: 'KA01AB1234', desc: 'Maruti Swift (Petrol)' },
-  { label: 'DL3CCA1234', desc: 'Hyundai Creta (Diesel)' },
-  { label: 'MH02CD5678', desc: 'Honda City (CVT)' },
+  { label: 'MH12NE2359', desc: 'Honda City 1.5 (Petrol)' },
+  { label: 'MH04EQ6676', desc: 'VW Polo 1.2 (Live)' },
+  { label: 'AP40DN2573', desc: 'Suzuki Access 125' },
+  { label: 'AP05EN9264', desc: 'Honda Activa 5G' },
 ];
 
 export default function HeroSection() {
