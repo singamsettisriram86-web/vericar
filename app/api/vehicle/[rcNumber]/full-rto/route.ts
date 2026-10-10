@@ -48,13 +48,23 @@ export async function GET(
       return str.slice(0, keepCount) + '••••••••••' + str.slice(-2);
     };
 
+    const maskFirstLetterOnly = (str?: string) => {
+      if (!str) return '••••••••••••';
+      const clean = str.trim();
+      // Strip common honorary prefixes if present to get the actual first name letter
+      const stripped = clean.replace(/^(late|shri|mr|dr|mrs|smt)\.?\s+/i, '').trim();
+      const firstChar = (stripped[0] || clean[0] || '').toUpperCase();
+      if (!firstChar || !/[A-Z]/.test(firstChar)) return '••••••••••••';
+      return `${firstChar}••••••••••••`;
+    };
+
     const maskedPreview = {
       rcNumber: fullDossier.rcNumber,
       registrationDate: fullDossier.registrationDate,
       rcExpiryDate: fullDossier.rcExpiryDate,
       ownerName: fullDossier.ownerName,
       ownerSerial: fullDossier.ownerSerial,
-      fatherName: maskStr(fullDossier.fatherName || 'On Record', 2),
+      fatherName: maskFirstLetterOnly(fullDossier.fatherName),
       presentAddress: maskStr(fullDossier.presentAddress, 10),
       permanentAddress: maskStr(fullDossier.permanentAddress, 10),
       vehicleClass: fullDossier.vehicleClass,

@@ -391,7 +391,7 @@ export default function RtoDossierSection({
                 OWNER FATHER / SPOUSE NAME
               </span>
               <div className="font-satoshi text-sm font-bold text-[#171e19] mt-1 flex items-center justify-between">
-                <span>{currentData?.fatherName || 'S. ••••••••••••'}</span>
+                <span>{currentData?.fatherName || '••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400" />}
               </div>
             </div>
@@ -402,7 +402,7 @@ export default function RtoDossierSection({
                 RTO PRESENT REGISTERED ADDRESS
               </span>
               <div className="font-satoshi text-xs font-semibold text-[#171e19] mt-1 flex items-center justify-between">
-                <span className="truncate">{currentData?.presentAddress || '8-11, Brahmana Street, Ambajipeta, ••••••••••••'}</span>
+                <span className="truncate">{currentData?.presentAddress || '••••••••••••••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400 shrink-0 ml-2" />}
               </div>
             </div>
@@ -413,7 +413,7 @@ export default function RtoDossierSection({
                 RTO PERMANENT ADDRESS
               </span>
               <div className="font-satoshi text-xs font-semibold text-[#171e19] mt-1 flex items-center justify-between">
-                <span className="truncate">{currentData?.permanentAddress || 'East Godavari, Andhra Pradesh, ••••••'}</span>
+                <span className="truncate">{currentData?.permanentAddress || '••••••••••••••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400 shrink-0 ml-2" />}
               </div>
             </div>

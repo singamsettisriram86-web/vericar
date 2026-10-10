@@ -275,7 +275,7 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
             rcExpiryDate: fitnessUpto,
             ownerName,
             ownerSerial: ownerCount,
-            fatherName: raw.father_name || "Record On File",
+            fatherName: raw.father_name || raw.owner_father_name || payload.owner_father_name || payload.father_name || "",
             presentAddress: raw.present_address || raw.permanent_address || `${rtoLocation}, ${rtoState}`,
             permanentAddress: raw.permanent_address || raw.present_address || `${rtoLocation}, ${rtoState}`,
             vehicleClass,
@@ -506,11 +506,12 @@ export async function getFullRtoDossier(rawRc: string): Promise<FullRtoDossier> 
         ? JSON.parse(existing.rawDetails)
         : existing;
       const statePrefix = rc.substring(0, 2);
-      const rtoInfo = RTO_STATE_MAP[statePrefix] || { state: 'Andhra Pradesh', city: `${statePrefix} RTO Division` };
+      const rawAny = raw as Record<string, any>;
+      const rtoInfo = RTO_STATE_MAP[statePrefix] || { state: rawAny.rtoState || 'India', city: existing.rtoLocation || `${statePrefix} RTO Division` };
       const hash = rc.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
 
-      const ownerLastName = (existing.ownerName || 'Citizen').split(' ').filter(Boolean).pop() || 'Prasad';
       const isTwoWheeler = (raw.vehicleClass || '').toLowerCase().includes('cycle') || (raw.vehicleClass || '').toLowerCase().includes('scooter');
+      const fatherName = rawAny.father_name || rawAny.owner_father_name || rawAny.fatherName || '';
 
       const fullDossier: FullRtoDossier = {
         rcNumber: rc,
@@ -518,9 +519,9 @@ export async function getFullRtoDossier(rawRc: string): Promise<FullRtoDossier> 
         rcExpiryDate: existing.fitnessUpto || raw.fitnessUpto || '25-Oct-2033',
         ownerName: existing.ownerName || raw.ownerName || 'Registered Owner',
         ownerSerial: existing.ownerCount || raw.ownerCount || 1,
-        fatherName: `S. V. ${ownerLastName}`,
-        presentAddress: `8-11, Brahmana Street, Ambajipeta, ${existing.rtoLocation || rtoInfo.city}, ${rtoInfo.state} - 533214`,
-        permanentAddress: `Main Road, Ambajipeta, East Godavari, ${rtoInfo.state} - 533214`,
+        fatherName: fatherName,
+        presentAddress: rawAny.present_address || rawAny.presentAddress || `${existing.rtoLocation || rtoInfo.city}, ${rtoInfo.state}`,
+        permanentAddress: rawAny.permanent_address || rawAny.permanentAddress || `${existing.rtoLocation || rtoInfo.city}, ${rtoInfo.state}`,
         vehicleClass: raw.vehicleClass || (isTwoWheeler ? 'M-Cycle/Scooter (2WN)' : 'Motor Car (LMV)'),
         bodyType: isTwoWheeler ? 'Solo with Pillion (Scooter)' : 'Saloon / Sedan',
         makerDescription: raw.make || existing.makerModel.split(' ')[0] || 'Honda',
