@@ -269,13 +269,47 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
             dataSource: 'APISATHI_LIVE',
           };
 
+          const rawCubic = raw.vehicle_cubic_capacity || raw.cubic_capacity || payload.cubic_capacity || payload.vehicle_cubic_capacity;
+          let cubicCapacityCc = '';
+          if (rawCubic) {
+            const num = parseFloat(rawCubic);
+            cubicCapacityCc = !isNaN(num) && num > 0 ? `${Math.round(num)} CC` : `${rawCubic}`;
+          }
+
+          const rawCylinders = raw.vehicle_cylinders_no || raw.cylinders || payload.cylinders;
+          const cylindersCount = rawCylinders ? `${rawCylinders}` : '';
+
+          const rawSeats = raw.vehicle_seat_capacity || raw.seating_capacity || payload.seating_capacity;
+          const seatingCapacity = rawSeats ? `${rawSeats}` : '';
+
+          const rawStanding = raw.vehicle_standing_capacity || raw.standing_capacity || '';
+          const standingCapacity = rawStanding ? `${rawStanding}` : '0';
+
+          const rawSleeper = raw.vehicle_sleeper_capacity || raw.sleeper_capacity || '';
+          const sleeperCapacity = rawSleeper ? `${rawSleeper}` : '0';
+
+          const rawUnladen = raw.unladen_weight || payload.unladen_weight;
+          const unladenWeightKg = rawUnladen ? `${rawUnladen}`.replace(/kg/i, '').trim() : '';
+
+          const rawGross = raw.gross_vehicle_weight || payload.gross_vehicle_weight;
+          const grossVehicleWeightKg = rawGross ? `${rawGross}`.replace(/kg/i, '').trim() : '';
+
+          const rawWheelbase = raw.wheelbase || payload.wheelbase;
+          const wheelbaseMm = rawWheelbase ? `${rawWheelbase}`.replace(/mm/i, '').trim() : '';
+
+          const taxUpto = raw.vehicle_tax_upto || raw.tax_upto || payload.tax_upto || '';
+          const taxMode = raw.tax_mode || (taxUpto ? 'One Time / Lifetime' : '');
+
+          const insurancePolicyNumber = raw.vehicle_insurance_policy_number || payload.insurance_policy_number || '';
+          const puccNumber = raw.pucc_number || payload.pucc_number || '';
+
           const fullDossier: FullRtoDossier = {
             rcNumber: rc,
             registrationDate: regDate,
             rcExpiryDate: fitnessUpto,
             ownerName,
             ownerSerial: ownerCount,
-            fatherName: raw.father_name || raw.owner_father_name || payload.owner_father_name || payload.father_name || "",
+            fatherName: raw.owner_father_name || raw.father_name || payload.owner_father_name || payload.father_name || "",
             presentAddress: raw.present_address || raw.permanent_address || `${rtoLocation}, ${rtoState}`,
             permanentAddress: raw.permanent_address || raw.present_address || `${rtoLocation}, ${rtoState}`,
             vehicleClass,
@@ -284,39 +318,39 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
             makerModel,
             fuelType,
             emissionNorms: regYear >= 2020 ? 'BS-VI' : 'BS-IV',
-            engineNumber: payload.engine || raw.engine || 'ENG' + rc.replace(/[^0-9]/g, '') + '092',
-            chassisNumber: payload.chassis || raw.chassis || 'CHAS' + rc.replace(/[^0-9]/g, '') + '8841',
-            cubicCapacityCc: raw.cubic_capacity || (isTwoWheeler ? '109 CC' : '1197 CC'),
-            cylindersCount: raw.cylinders || (isTwoWheeler ? '1' : '4'),
-            seatingCapacity: raw.seating_capacity || (isTwoWheeler ? '2' : '5'),
-            standingCapacity: raw.standing_capacity || '0',
-            sleeperCapacity: raw.sleeper_capacity || '0',
-            unladenWeightKg: raw.unladen_weight || (isTwoWheeler ? '109 KG' : '980 KG'),
-            grossVehicleWeightKg: raw.gross_vehicle_weight || (isTwoWheeler ? '239 KG' : '1405 KG'),
-            wheelbaseMm: raw.wheelbase || (isTwoWheeler ? '1238 MM' : '2450 MM'),
+            engineNumber: payload.engine || raw.engine || '',
+            chassisNumber: payload.chassis || raw.chassis || '',
+            cubicCapacityCc: cubicCapacityCc || '',
+            cylindersCount: cylindersCount || '',
+            seatingCapacity: seatingCapacity || '',
+            standingCapacity,
+            sleeperCapacity,
+            unladenWeightKg,
+            grossVehicleWeightKg,
+            wheelbaseMm,
             color: raw.vehicle_colour || 'Factory Standard',
             registeringAuthority: rtoLocation,
             rtoState,
-            taxUpto: raw.tax_upto || 'L.T.T (Life Time Tax Paid)',
-            taxMode: raw.tax_mode || 'One Time / Lifetime',
+            taxUpto: taxUpto || 'L.T.T (Life Time Tax Paid)',
+            taxMode,
             insuranceCompany,
-            insurancePolicyNumber: raw.vehicle_insurance_policy_number || 'POL-VRC-' + Math.floor(10000000 + Math.random() * 90000000),
+            insurancePolicyNumber,
             insuranceExpiryDate: insuranceExpiry,
-            puccNumber: raw.pucc_number || 'PUC-' + rc.substring(0, 4) + '-' + Math.floor(100000 + Math.random() * 900000),
+            puccNumber,
             puccExpiryDate: pucUpto,
             financed: isFinanced,
             financerName: financer || 'None (NOC Issued)',
             hypothecationType: isFinanced ? 'Hypothecation with ' + financer : 'Unencumbered',
-            rcStatus: raw.rc_status || 'ACTIVE (STANDARD)',
+            rcStatus: raw.rc_status || raw.status || 'ACTIVE (STANDARD)',
             blacklistStatus,
             blacklistDetails: raw.blacklist_details || [],
             challanCount: pendingChallansCount,
             challanDetails: challans.map((c: any) => ({
-              challanNumber: c.challan_number || 'AP' + Math.floor(10000000 + Math.random() * 90000000),
+              challanNumber: c.challan_number || '',
               challanDate: c.challan_date || regDate,
-              amount: c.amount || 500,
+              amount: c.amount || 0,
               challanStatus: c.status || 'UNPAID',
-              offenseDetails: c.offence || 'Traffic Rule Violation / Helmet / Seatbelt',
+              offenseDetails: c.offence || 'Traffic Rule Violation',
               rtoName: rtoLocation,
             })),
           };
@@ -366,11 +400,11 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
   const hash = rc.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
 
   const carCatalogue = [
-    { make: 'Maruti Suzuki', model: 'Swift', variant: 'ZXi 1.2', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Pearl Arctic White' },
-    { make: 'Hyundai', model: 'Creta', variant: 'SX (O) 1.5 AT', class: 'Motor Car (LMV)', fuel: 'Diesel', color: 'Titan Grey Metallic' },
-    { make: 'Tata', model: 'Nexon', variant: 'Fearless+ S', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Daytona Grey' },
-    { make: 'Honda', model: 'City', variant: 'ZX CVT', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Platinum White Pearl' },
-    { make: 'Mahindra', model: 'Thar', variant: 'LX 4x4 Hard Top', class: 'Motor Car (LMV)', fuel: 'Diesel', color: 'Napoli Black' },
+    { make: 'Maruti Suzuki', model: 'Swift', variant: 'ZXi 1.2', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Pearl Arctic White', cc: '1197 CC', cylinders: '4' },
+    { make: 'Hyundai', model: 'Creta', variant: 'SX (O) 1.5 AT', class: 'Motor Car (LMV)', fuel: 'Diesel', color: 'Titan Grey Metallic', cc: '1493 CC', cylinders: '4' },
+    { make: 'Tata', model: 'Nexon', variant: 'Fearless+ S', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Daytona Grey', cc: '1199 CC', cylinders: '3' },
+    { make: 'Honda', model: 'City', variant: 'ZX CVT', class: 'Motor Car (LMV)', fuel: 'Petrol', color: 'Platinum White Pearl', cc: '1498 CC', cylinders: '4' },
+    { make: 'Mahindra', model: 'Thar', variant: 'LX 4x4 Hard Top', class: 'Motor Car (LMV)', fuel: 'Diesel', color: 'Napoli Black', cc: '2184 CC', cylinders: '4' },
   ];
 
   const car = carCatalogue[hash % carCatalogue.length];
@@ -418,7 +452,7 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
     rcExpiryDate: simulatedData.fitnessUpto,
     ownerName: simulatedData.ownerName,
     ownerSerial: simulatedData.ownerCount,
-    fatherName: 'Late S. ' + simulatedData.ownerName.split(' ')[1] || 'Registered Citizen',
+    fatherName: '',
     presentAddress: `Plot No. ${12 + (hash % 80)}, Sector ${1 + (hash % 15)}, ${rtoInfo.city}, ${rtoInfo.state}`,
     permanentAddress: `Plot No. ${12 + (hash % 80)}, Sector ${1 + (hash % 15)}, ${rtoInfo.city}, ${rtoInfo.state}`,
     vehicleClass: simulatedData.vehicleClass,
@@ -427,10 +461,10 @@ export async function getVehicleReport(rawRc: string): Promise<VehicleReportData
     makerModel: `${car.make} ${car.model}`,
     fuelType: simulatedData.fuelType,
     emissionNorms: simulatedData.emissionNorm,
-    engineNumber: `K12M${100000 + (hash * 47) % 899999}`,
-    chassisNumber: `MA3E4D${1000000000 + (hash * 93) % 899999999}`,
-    cubicCapacityCc: '1197 CC',
-    cylindersCount: '4',
+    engineNumber: `ENG${100000 + (hash * 47) % 899999}`,
+    chassisNumber: `CHAS${1000000000 + (hash * 93) % 899999999}`,
+    cubicCapacityCc: car.cc,
+    cylindersCount: car.cylinders,
     seatingCapacity: '5',
     standingCapacity: '0',
     sleeperCapacity: '0',
@@ -513,40 +547,47 @@ export async function getFullRtoDossier(rawRc: string): Promise<FullRtoDossier> 
       const isTwoWheeler = (raw.vehicleClass || '').toLowerCase().includes('cycle') || (raw.vehicleClass || '').toLowerCase().includes('scooter');
       const fatherName = rawAny.father_name || rawAny.owner_father_name || rawAny.fatherName || '';
 
+      const rawCubic = rawAny.vehicle_cubic_capacity || rawAny.cubic_capacity || rawAny.cubicCapacityCc;
+      let cubicCapacityCc = '';
+      if (rawCubic) {
+        const num = parseFloat(rawCubic);
+        cubicCapacityCc = !isNaN(num) && num > 0 ? `${Math.round(num)} CC` : `${rawCubic}`;
+      }
+
       const fullDossier: FullRtoDossier = {
         rcNumber: rc,
-        registrationDate: existing.regDate || raw.regDate || '26-Oct-2018',
-        rcExpiryDate: existing.fitnessUpto || raw.fitnessUpto || '25-Oct-2033',
+        registrationDate: existing.regDate || raw.regDate || '',
+        rcExpiryDate: existing.fitnessUpto || raw.fitnessUpto || '',
         ownerName: existing.ownerName || raw.ownerName || 'Registered Owner',
         ownerSerial: existing.ownerCount || raw.ownerCount || 1,
         fatherName: fatherName,
         presentAddress: rawAny.present_address || rawAny.presentAddress || `${existing.rtoLocation || rtoInfo.city}, ${rtoInfo.state}`,
         permanentAddress: rawAny.permanent_address || rawAny.permanentAddress || `${existing.rtoLocation || rtoInfo.city}, ${rtoInfo.state}`,
-        vehicleClass: raw.vehicleClass || (isTwoWheeler ? 'M-Cycle/Scooter (2WN)' : 'Motor Car (LMV)'),
-        bodyType: isTwoWheeler ? 'Solo with Pillion (Scooter)' : 'Saloon / Sedan',
-        makerDescription: raw.make || existing.makerModel.split(' ')[0] || 'Honda',
-        makerModel: existing.makerModel || raw.makerModel || 'Honda Activa 5G',
+        vehicleClass: raw.vehicleClass || (isTwoWheeler ? 'Two Wheeler' : 'Motor Car (LMV)'),
+        bodyType: rawAny.body_type || (isTwoWheeler ? 'Solo Two-Wheeler' : 'Saloon / Sedan'),
+        makerDescription: raw.make || existing.makerModel.split(' ')[0] || '',
+        makerModel: existing.makerModel || raw.makerModel || '',
         fuelType: existing.fuelType || raw.fuelType || 'Petrol',
         emissionNorms: raw.emissionNorm || 'BS-IV',
-        engineNumber: `JF50E${1000000 + (hash * 47) % 8999999}`,
-        chassisNumber: `ME4JF506JK${1000000 + (hash * 93) % 8999999}`,
-        cubicCapacityCc: isTwoWheeler ? '109 CC' : '1197 CC',
-        cylindersCount: isTwoWheeler ? '1 Cylinder' : '4 Cylinders',
-        seatingCapacity: isTwoWheeler ? '2 Seater (Sleeper: 0)' : '5 Seater',
+        engineNumber: rawAny.engine || (existing.engineLast4 ? `***${existing.engineLast4}` : ''),
+        chassisNumber: rawAny.chassis || (existing.chassisLast4 ? `***${existing.chassisLast4}` : ''),
+        cubicCapacityCc: cubicCapacityCc,
+        cylindersCount: rawAny.vehicle_cylinders_no || rawAny.cylindersCount || '',
+        seatingCapacity: rawAny.vehicle_seat_capacity || rawAny.seatingCapacity || '',
         standingCapacity: '0',
         sleeperCapacity: '0',
-        unladenWeightKg: isTwoWheeler ? '109 KG' : '935 KG',
-        grossVehicleWeightKg: isTwoWheeler ? '279 KG' : '1405 KG',
-        wheelbaseMm: isTwoWheeler ? '1238 MM' : '2450 MM',
-        color: raw.color || 'Matte Axis Grey Metallic',
+        unladenWeightKg: rawAny.unladen_weight || rawAny.unladenWeightKg || '',
+        grossVehicleWeightKg: rawAny.gross_vehicle_weight || rawAny.grossVehicleWeightKg || '',
+        wheelbaseMm: rawAny.wheelbase || rawAny.wheelbaseMm || '',
+        color: raw.color || 'Standard',
         registeringAuthority: existing.rtoLocation || raw.rtoLocation || `${statePrefix} RTO Division`,
         rtoState: raw.rtoState || rtoInfo.state,
-        taxUpto: 'L.T.T (One-Time Paid) (Lifetime)',
+        taxUpto: rawAny.vehicle_tax_upto || rawAny.taxUpto || 'L.T.T (Lifetime)',
         taxMode: 'One Time / Lifetime',
-        insuranceCompany: existing.insuranceExpiry ? 'National Insurance Co. Ltd' : 'Valid on National Server',
-        insurancePolicyNumber: `POL-VRC-${(hash * 3829) % 89999999}`,
-        insuranceExpiryDate: existing.insuranceExpiry || '25-Oct-2027',
-        puccNumber: `PUC-${rc.substring(0, 4)}-${(hash * 1928) % 899999}`,
+        insuranceCompany: existing.insuranceExpiry ? 'Policy On File' : 'Valid on National Server',
+        insurancePolicyNumber: rawAny.vehicle_insurance_policy_number || '',
+        insuranceExpiryDate: existing.insuranceExpiry || '',
+        puccNumber: rawAny.pucc_number || '',
         puccExpiryDate: existing.pucUpto || 'Valid on National Server',
         financed: false,
         financerName: 'None (Unencumbered / NOC Cleared)',

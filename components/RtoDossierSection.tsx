@@ -369,7 +369,7 @@ export default function RtoDossierSection({
                 FULL CHASSIS NUMBER (VIN)
               </span>
               <div className="font-mono text-sm font-bold text-[#171e19] mt-1 flex items-center justify-between">
-                <span>{currentData?.chassisNumber || 'ME4JF506JK••••••••'}</span>
+                <span>{currentData?.chassisNumber || '••••••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400" />}
               </div>
             </div>
@@ -380,7 +380,7 @@ export default function RtoDossierSection({
                 FULL ENGINE NUMBER
               </span>
               <div className="font-mono text-sm font-bold text-[#171e19] mt-1 flex items-center justify-between">
-                <span>{currentData?.engineNumber || 'JF50E••••••••'}</span>
+                <span>{currentData?.engineNumber || '••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400" />}
               </div>
             </div>
@@ -424,7 +424,7 @@ export default function RtoDossierSection({
                 ENGINE DISPLACEMENT (CC) & CYLINDERS
               </span>
               <div className="font-satoshi text-sm font-bold text-[#171e19] mt-1">
-                {currentData?.cubicCapacityCc || '109 CC'} / {currentData?.cylindersCount || '1'} Cylinder(s)
+                {currentData?.cubicCapacityCc ? currentData.cubicCapacityCc : 'On Record'}{currentData?.cylindersCount ? ` / ${currentData.cylindersCount} Cyl` : ''}
               </div>
             </div>
 
@@ -434,7 +434,7 @@ export default function RtoDossierSection({
                 SEATING & SLEEPER CAPACITY
               </span>
               <div className="font-satoshi text-sm font-bold text-[#171e19] mt-1">
-                {currentData?.seatingCapacity || '2'} Seater (Sleeper: {currentData?.sleeperCapacity || '0'})
+                {currentData?.seatingCapacity ? `${currentData.seatingCapacity} Seater` : 'On Record'}{currentData?.sleeperCapacity && currentData.sleeperCapacity !== '0' ? ` (Sleeper: ${currentData.sleeperCapacity})` : ''}
               </div>
             </div>
 
@@ -444,7 +444,7 @@ export default function RtoDossierSection({
                 UNLADEN WEIGHT & WHEELBASE
               </span>
               <div className="font-satoshi text-sm font-bold text-[#171e19] mt-1">
-                {currentData?.unladenWeightKg || '109 KG'} / {currentData?.wheelbaseMm || '1238 MM'}
+                {currentData?.unladenWeightKg ? `${currentData.unladenWeightKg} KG` : 'On Record'}{currentData?.wheelbaseMm ? ` / ${currentData.wheelbaseMm} MM` : ''}
               </div>
             </div>
 
@@ -454,7 +454,7 @@ export default function RtoDossierSection({
                 TAX VALIDITY & MODE
               </span>
               <div className="font-satoshi text-sm font-bold text-[#171e19] mt-1">
-                {currentData?.taxUpto || 'L.T.T (One-Time Paid)'} ({currentData?.taxMode || 'Lifetime'})
+                {currentData?.taxUpto || 'On Record'}{currentData?.taxMode ? ` (${currentData.taxMode})` : ''}
               </div>
             </div>
 
@@ -464,7 +464,7 @@ export default function RtoDossierSection({
                 NATIONAL INSURANCE POLICY NO
               </span>
               <div className="font-mono text-sm font-bold text-[#171e19] mt-1 flex items-center justify-between">
-                <span>{currentData?.insurancePolicyNumber || 'POL-VRC-••••••••'}</span>
+                <span>{currentData?.insurancePolicyNumber || '••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400" />}
               </div>
             </div>
@@ -475,7 +475,7 @@ export default function RtoDossierSection({
                 PUCC CERTIFICATE NO
               </span>
               <div className="font-mono text-sm font-bold text-[#171e19] mt-1 flex items-center justify-between">
-                <span>{currentData?.puccNumber || 'PUC-AP05-••••••'}</span>
+                <span>{currentData?.puccNumber || '••••••••••••'}</span>
                 {!isUnlocked && <Lock className="w-3.5 h-3.5 text-neutral-400" />}
               </div>
             </div>
