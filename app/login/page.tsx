@@ -182,8 +182,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-white text-[#171e19]">
       <Navbar />
 
-      <main className="pt-32 pb-24 bg-[#ffffff] bg-grid-light flex-1 flex items-center justify-center px-4">
-        <div className="w-full max-w-md bg-white rounded-2xl border-2 border-[#171e19] shadow-[12px_12px_0px_0px_#171e19] p-8 brutalist-card relative">
+      <main className="pt-24 sm:pt-32 pb-16 sm:pb-24 bg-[#ffffff] bg-grid-light flex-1 flex items-center justify-center px-3 sm:px-4">
+        <div className="w-full max-w-md bg-white rounded-2xl border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#171e19] sm:shadow-[12px_12px_0px_0px_#171e19] p-5 sm:p-8 brutalist-card relative">
 
           <Link
             href="/"

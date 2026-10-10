@@ -192,15 +192,15 @@ export default function RechargeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs transition-opacity animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-xs transition-opacity animate-in fade-in duration-200">
       
       {/* Modal Card */}
-      <div className="relative w-full max-w-lg bg-white rounded-2xl border-2 border-[#171e19] shadow-[10px_10px_0px_0px_#171e19] p-6 sm:p-8 overflow-hidden">
+      <div className="relative w-full max-w-lg bg-white rounded-2xl border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#171e19] sm:shadow-[10px_10px_0px_0px_#171e19] p-5 sm:p-8 max-h-[92vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-[#171e19]/60 hover:text-[#171e19] hover:bg-[#171e19]/5 rounded-full transition-colors cursor-pointer"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 text-[#171e19]/60 hover:text-[#171e19] hover:bg-[#171e19]/5 rounded-full transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>

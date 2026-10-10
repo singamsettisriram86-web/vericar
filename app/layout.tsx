@@ -1,5 +1,4 @@
-// app/layout.tsx
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Anton } from 'next/font/google';
 import './globals.css';
 
@@ -9,6 +8,12 @@ const anton = Anton({
   variable: '--font-anton',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: 'VERICAR | Uncover The Truth Before You Buy Any Used Car',
@@ -27,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${anton.variable} scroll-smooth`}>
-      <body className="font-satoshi bg-[#ffffff] text-[#171e19] antialiased selection:bg-[#ffe17c] selection:text-[#171e19] min-h-screen flex flex-col">
+    <html lang="en" className={`${anton.variable} scroll-smooth overflow-x-hidden`}>
+      <body className="font-satoshi bg-[#ffffff] text-[#171e19] antialiased selection:bg-[#ffe17c] selection:text-[#171e19] min-h-screen flex flex-col overflow-x-hidden">
         {children}
         <Script
           src="https://sdk.cashfree.com/js/v3/cashfree.js"

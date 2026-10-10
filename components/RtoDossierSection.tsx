@@ -278,28 +278,28 @@ export default function RtoDossierSection({
       </div>
 
       {/* Main Box */}
-      <div className="bg-white rounded-2xl border-2 border-[#171e19] shadow-[8px_8px_0px_0px_#171e19] overflow-hidden">
+      <div className="bg-white rounded-2xl border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#171e19] sm:shadow-[8px_8px_0px_0px_#171e19] overflow-hidden">
         
         {/* Banner */}
-        <div className="p-6 bg-[#f8f9fa] border-b border-[#171e19]/15 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-4 sm:p-6 bg-[#f8f9fa] border-b border-[#171e19]/15 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="font-satoshi text-[11px] font-bold uppercase tracking-wider text-[#171e19]/60">
+            <span className="font-satoshi text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#171e19]/60">
               NATIONAL INVENTORY REGISTRATION CARD
             </span>
-            <h3 className="font-anton text-2xl text-[#171e19] tracking-wide">
+            <h3 className="font-anton text-xl sm:text-2xl text-[#171e19] tracking-wide">
               {rcNumber} // OFFICIAL VAHAN SPECIFICATION RECORD
             </h3>
-            <p className="font-satoshi text-xs text-[#171e19]/70">
+            <p className="font-satoshi text-xs text-[#171e19]/70 leading-relaxed">
               Contains unmasked engine stamping, chassis number, registered owner father&apos;s name, exact RTO home address, tax receipts, and full police challan archives.
             </p>
           </div>
 
           {!isUnlocked && (
-            <div className="shrink-0">
+            <div className="shrink-0 w-full sm:w-auto">
               <button
                 onClick={handleUnlockDossier}
                 disabled={loading}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-base px-6 py-3.5 rounded-xl border border-[#171e19]/30 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-sm sm:text-base px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl border border-[#171e19]/30 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer disabled:opacity-50 text-center"
               >
                 {loading ? (
                   <>
@@ -320,7 +320,7 @@ export default function RtoDossierSection({
 
         {/* Value Proposition Preview Notice when LOCKED */}
         {!isUnlocked && (
-          <div className="p-5 bg-[#ffe17c]/20 border-b border-[#171e19]/15">
+          <div className="p-4 sm:p-5 bg-[#ffe17c]/20 border-b border-[#171e19]/15">
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-[#171e19] shrink-0 mt-0.5" />
               <div>
@@ -507,13 +507,13 @@ export default function RtoDossierSection({
 
           {/* Bottom Floating Banner when LOCKED */}
           {!isUnlocked && (
-            <div className="mt-6 p-5 bg-[#171e19] text-white rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3 text-left">
-                <div className="w-10 h-10 rounded-full bg-[#ffe17c] text-[#171e19] flex items-center justify-center shrink-0">
-                  <FileText className="w-5 h-5" />
+            <div className="mt-6 p-4 sm:p-5 bg-[#171e19] text-white rounded-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+              <div className="flex items-start sm:items-center gap-3 text-left">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#ffe17c] text-[#171e19] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                  <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h4 className="font-anton text-lg tracking-wide text-white">
+                  <h4 className="font-anton text-base sm:text-lg tracking-wide text-white">
                     UNLOCK THE COMPLETE OFFICIAL EXTRACT FOR JUST ₹39
                   </h4>
                   <p className="font-satoshi text-xs text-white/70">
@@ -525,7 +525,7 @@ export default function RtoDossierSection({
               <button
                 onClick={handleUnlockDossier}
                 disabled={loading}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-base px-6 py-3 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-xl shrink-0 cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-sm sm:text-base px-5 sm:px-6 py-3 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-xl shrink-0 cursor-pointer disabled:opacity-50 text-center"
               >
                 {loading ? (
                   <>

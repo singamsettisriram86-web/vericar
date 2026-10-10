@@ -43,19 +43,19 @@ export default function BookingPage({ params }: BookingPageProps) {
           </div>
 
           {/* Coming Soon Card */}
-          <div className="bg-[#171e19] text-white rounded-3xl p-8 sm:p-12 border-2 border-[#171e19] shadow-[12px_12px_0px_0px_#ffe17c] text-center relative overflow-hidden">
+          <div className="bg-[#171e19] text-white rounded-3xl p-5 sm:p-8 md:p-12 border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#ffe17c] sm:shadow-[12px_12px_0px_0px_#ffe17c] text-center relative overflow-hidden">
             
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ffe17c] text-[#171e19] font-anton text-xs uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-[#ffe17c] text-[#171e19] font-anton text-[11px] sm:text-xs uppercase tracking-widest mb-6">
               <Clock className="w-3.5 h-3.5" />
               <span>COMING SOON</span>
             </div>
 
-            <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mx-auto mb-6">
-              <Wrench className="w-8 h-8 text-[#ffe17c]" />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mx-auto mb-6">
+              <Wrench className="w-7 h-7 sm:w-8 sm:h-8 text-[#ffe17c]" />
             </div>
 
-            <h1 className="font-anton text-3xl sm:text-5xl text-white tracking-tight uppercase leading-tight mb-4">
+            <h1 className="font-anton text-2xl sm:text-4xl md:text-5xl text-white tracking-tight uppercase leading-tight mb-4">
               150-Point Doorstep Inspection
             </h1>
 

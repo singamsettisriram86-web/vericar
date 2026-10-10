@@ -81,31 +81,31 @@ export default function HeroSection() {
 
   return (
     <>
-      <section id="verify" className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-[#ffffff] bg-grid-light overflow-hidden border-b border-[#171e19]/10">
+      <section id="verify" className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28 bg-[#ffffff] bg-grid-light overflow-hidden border-b border-[#171e19]/10">
         
         {/* Subtle ambient light glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#ffe17c]/20 rounded-full blur-3xl pointer-events-none -z-0" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[200px] sm:h-[350px] bg-[#ffe17c]/20 rounded-full blur-3xl pointer-events-none -z-0" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           
           {/* Top badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#171e19]/15 bg-white/80 shadow-xs mb-8 backdrop-blur-xs">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ffe17c] animate-pulse" />
-            <span className="font-satoshi text-xs uppercase tracking-widest font-bold text-[#171e19]">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-[#171e19]/15 bg-white/80 shadow-xs mb-6 sm:mb-8 backdrop-blur-xs max-w-full">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#ffe17c] animate-pulse shrink-0" />
+            <span className="font-satoshi text-[10px] sm:text-xs uppercase tracking-widest font-bold text-[#171e19] truncate">
               INDIA&apos;S TRUSTED VEHICLE INTELLIGENCE PLATFORM
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-anton text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-[#171e19] tracking-tight leading-[0.92] sm:leading-[0.88] max-w-5xl mx-auto mb-8">
+          <h1 className="font-anton text-4xl sm:text-7xl md:text-8xl lg:text-9xl text-[#171e19] tracking-tight leading-[0.95] sm:leading-[0.88] max-w-5xl mx-auto mb-6 sm:mb-8">
             UNCOVER THE TRUTH <br className="hidden sm:inline" />
-            <span className="highlight-rotate-15 text-[#171e19] px-3 pb-1 inline-block">
+            <span className="highlight-rotate-15 text-[#171e19] px-2 sm:px-3 pb-1 inline-block">
               BEFORE YOU BUY.
             </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="font-satoshi text-lg sm:text-xl text-[#171e19]/75 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="font-satoshi text-base sm:text-lg md:text-xl text-[#171e19]/75 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-normal px-2">
             Instant Vahan government registry audit, AI-forecasted annual maintenance costs in ₹ INR, and certified doorstep vehicle inspections for used car buyers in India.
           </p>
 
@@ -113,11 +113,11 @@ export default function HeroSection() {
           <div className="max-w-2xl mx-auto mb-6">
             <form
               onSubmit={(e) => handleSearch(e)}
-              className="flex flex-col sm:flex-row gap-3 p-2 bg-white rounded-2xl border-2 border-[#171e19] shadow-[6px_6px_0px_0px_#171e19] transition-all"
+              className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 p-2 bg-white rounded-2xl border-2 border-[#171e19] shadow-[4px_4px_0px_0px_#171e19] sm:shadow-[6px_6px_0px_0px_#171e19] transition-all"
             >
-              <div className="relative flex-1 flex items-center">
-                <span className="pl-4 pr-2 text-[#171e19]/40">
-                  <Car className="w-6 h-6 text-[#171e19]" />
+              <div className="relative flex-1 flex items-center min-w-0">
+                <span className="pl-3 sm:pl-4 pr-2 text-[#171e19]/40 shrink-0">
+                  <Car className="w-5 h-5 sm:w-6 sm:h-6 text-[#171e19]" />
                 </span>
                 <input
                   type="text"
@@ -127,14 +127,14 @@ export default function HeroSection() {
                     if (errorMsg) setErrorMsg('');
                   }}
                   placeholder="ENTER RC (E.G. AP05EN9264)"
-                  className="w-full py-4 pr-4 font-anton text-lg sm:text-xl text-[#171e19] placeholder:text-[#171e19]/35 uppercase tracking-wider bg-transparent focus:outline-none"
+                  className="w-full py-3.5 sm:py-4 pr-3 sm:pr-4 font-anton text-base sm:text-xl text-[#171e19] placeholder:text-[#171e19]/35 uppercase tracking-wider bg-transparent focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-xl px-8 py-4 rounded-xl border border-[#171e19]/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-lg sm:text-xl px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-[#171e19]/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shrink-0"
               >
                 {loading ? (
                   <span>SCANNING...</span>
@@ -155,8 +155,8 @@ export default function HeroSection() {
           </div>
 
           {/* Quick Sample RCs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 max-w-xl mx-auto">
-            <span className="font-satoshi text-xs uppercase tracking-wider text-[#171e19]/50 font-bold mr-1">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-xl mx-auto px-2">
+            <span className="font-satoshi text-[11px] sm:text-xs uppercase tracking-wider text-[#171e19]/50 font-bold mr-1">
               Try Sample Cars:
             </span>
             {SAMPLE_CHIPS.map((chip) => (
@@ -167,7 +167,7 @@ export default function HeroSection() {
                   handleSearch(e, chip.label);
                 }}
                 type="button"
-                className="px-3 py-1 bg-white border border-[#171e19]/15 hover:border-[#171e19] hover:bg-[#ffe17c]/20 text-xs font-anton tracking-wider text-[#171e19] rounded-md transition-all cursor-pointer"
+                className="px-2.5 py-1 bg-white border border-[#171e19]/15 hover:border-[#171e19] hover:bg-[#ffe17c]/20 text-[11px] sm:text-xs font-anton tracking-wider text-[#171e19] rounded-md transition-all cursor-pointer active:scale-95"
               >
                 {chip.label} <span className="text-[10px] font-satoshi font-normal text-[#171e19]/60">({chip.desc})</span>
               </button>
@@ -175,28 +175,28 @@ export default function HeroSection() {
           </div>
 
           {/* Trust Badges */}
-          <div className="mt-14 pt-8 border-t border-[#171e19]/10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="flex items-center justify-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#171e19]" />
-              <span className="font-satoshi text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
+          <div className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-[#171e19]/10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-left sm:text-center">
+              <CheckCircle2 className="w-4 h-4 text-[#171e19] shrink-0" />
+              <span className="font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
                 Direct MoRTH Vahan Data
               </span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#171e19]" />
-              <span className="font-satoshi text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-left sm:text-center">
+              <CheckCircle2 className="w-4 h-4 text-[#171e19] shrink-0" />
+              <span className="font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
                 AI Projected Repair Matrix
               </span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#171e19]" />
-              <span className="font-satoshi text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-left sm:text-center">
+              <CheckCircle2 className="w-4 h-4 text-[#171e19] shrink-0" />
+              <span className="font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
                 Doorstep Vehicle Inspection
               </span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#171e19]" />
-              <span className="font-satoshi text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-left sm:text-center">
+              <CheckCircle2 className="w-4 h-4 text-[#171e19] shrink-0" />
+              <span className="font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#171e19]/80">
                 Challan & Hypothecation Check
               </span>
             </div>

@@ -46,31 +46,31 @@ export default function ProblemSolutionSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         
         {/* Left Half: The Old Way (Problem) */}
-        <div className="p-8 sm:p-12 lg:p-16 xl:p-20 bg-[#171e19] border-b lg:border-b-0 lg:border-r border-[#b7c6c2]/10 flex flex-col items-start justify-start">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-red-500/10 border border-red-500/20 text-red-400 font-satoshi text-xs uppercase tracking-widest font-bold mb-6">
+        <div className="p-5 sm:p-8 lg:p-16 xl:p-20 bg-[#171e19] border-b lg:border-b-0 lg:border-r border-[#b7c6c2]/10 flex flex-col items-start justify-start">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-red-500/10 border border-red-500/20 text-red-400 font-satoshi text-xs uppercase tracking-widest font-bold mb-5 sm:mb-6">
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>The Reality of Used Car Lots</span>
           </div>
 
-          <h2 className="font-anton text-4xl sm:text-6xl text-white tracking-tight leading-[0.9] mb-4">
+          <h2 className="font-anton text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[0.9] mb-4">
             THE OLD WAY
           </h2>
 
-          <p className="font-satoshi text-[#b7c6c2] text-base sm:text-lg mb-12 max-w-lg leading-relaxed">
+          <p className="font-satoshi text-[#b7c6c2] text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-lg leading-relaxed">
             Blind trust in smooth-talking brokers, dubious dealer claims, and relying on a casual 5-minute test drive around the block.
           </p>
 
-          <div className="space-y-8 w-full">
+          <div className="space-y-6 sm:space-y-8 w-full">
             {PROBLEMS.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-4 group">
+              <div key={idx} className="flex items-start gap-3 sm:gap-4 group">
                 <div className="mt-1 p-1 rounded-full bg-red-500/10 text-red-400 shrink-0">
-                  <XCircle className="w-5 h-5 stroke-[2.2]" />
+                  <XCircle className="w-4 sm:w-5 h-4 sm:h-5 stroke-[2.2]" />
                 </div>
                 <div>
-                  <h3 className="font-anton text-xl text-white/90 tracking-wide mb-1 group-hover:text-red-300 transition-colors">
+                  <h3 className="font-anton text-lg sm:text-xl text-white/90 tracking-wide mb-1 group-hover:text-red-300 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="font-satoshi text-sm text-[#b7c6c2]/80 leading-relaxed">
+                  <p className="font-satoshi text-xs sm:text-sm text-[#b7c6c2]/80 leading-relaxed">
                     {item.detail}
                   </p>
                 </div>
@@ -80,18 +80,18 @@ export default function ProblemSolutionSection() {
         </div>
 
         {/* Right Half: The VeriCar Way (Solution) */}
-        <div className="p-8 sm:p-12 lg:p-16 xl:p-20 bg-[#272727] border-l-0 lg:border-l-2 border-[#ffe17c] flex flex-col items-start justify-start relative">
+        <div className="p-5 sm:p-8 lg:p-16 xl:p-20 bg-[#272727] border-l-0 lg:border-l-2 border-[#ffe17c] flex flex-col items-start justify-start relative">
           
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#ffe17c]/10 border border-[#ffe17c]/30 text-[#ffe17c] font-satoshi text-xs uppercase tracking-widest font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#ffe17c]/10 border border-[#ffe17c]/30 text-[#ffe17c] font-satoshi text-xs uppercase tracking-widest font-bold mb-5 sm:mb-6">
             <Sparkles className="w-3.5 h-3.5 text-[#ffe17c]" />
             <span>The VeriCar Standard</span>
           </div>
 
-          <h2 className="font-anton text-4xl sm:text-6xl text-[#ffe17c] tracking-tight leading-[0.9] mb-4">
+          <h2 className="font-anton text-3xl sm:text-5xl md:text-6xl text-[#ffe17c] tracking-tight leading-[0.9] mb-4">
             THE VERICAR WAY
           </h2>
 
-          <p className="font-satoshi text-white/80 text-base sm:text-lg mb-12 max-w-lg leading-relaxed">
+          <p className="font-satoshi text-white/80 text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-lg leading-relaxed">
             Forensic RTO intelligence paired with AI cost projections and certified ground truth physical mechanics.
           </p>
 

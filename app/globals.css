@@ -44,10 +44,16 @@
   z-index: 1;
 }
 
+@media (max-width: 640px) {
+  .highlight-rotate-15 {
+    white-space: normal;
+  }
+}
+
 .highlight-rotate-15::before {
   content: "";
   position: absolute;
-  inset: 10% -6% 5% -6%;
+  inset: 10% -4% 5% -4%;
   background-color: #ffe17c;
   transform: rotate(-3deg);
   z-index: -1;
@@ -57,7 +63,7 @@
 .highlight-rotate-15-dark::before {
   content: "";
   position: absolute;
-  inset: 10% -6% 5% -6%;
+  inset: 10% -4% 5% -4%;
   background-color: #ffe17c;
   transform: rotate(3deg);
   z-index: -1;

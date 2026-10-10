@@ -26,11 +26,11 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 bg-[#ffffff] bg-grid-light border-b border-[#171e19]/10">
+    <section id="how-it-works" className="py-16 sm:py-24 bg-[#ffffff] bg-grid-light border-b border-[#171e19]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Two-column layout (1:2 ratio) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           
           {/* Left Column: Sticky Anton title (4 cols out of 12) */}
           <div className="lg:col-span-4 lg:sticky lg:top-28">
@@ -41,49 +41,49 @@ export default function HowItWorks() {
               </span>
             </div>
 
-            <h2 className="font-anton text-5xl sm:text-6xl md:text-7xl text-[#171e19] tracking-tight leading-[0.9] mb-6">
+            <h2 className="font-anton text-4xl sm:text-6xl md:text-7xl text-[#171e19] tracking-tight leading-[0.9] mb-4 sm:mb-6">
               HOW IT <br />
               <span className="highlight-rotate-15 px-2">WORKS</span>
             </h2>
 
-            <p className="font-satoshi text-[#171e19]/70 text-base sm:text-lg mb-8 leading-relaxed">
+            <p className="font-satoshi text-[#171e19]/70 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
               Zero guesswork. In three definitive steps, turn a high-risk private transaction into an ironclad verified purchase.
             </p>
 
             <Link
               href="#verify"
-              className="inline-flex items-center gap-3 font-anton text-lg text-[#171e19] bg-[#ffe17c] hover:bg-[#ffdc5c] px-6 py-3.5 rounded-xl border border-[#171e19]/20 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+              className="inline-flex items-center gap-2.5 font-anton text-base sm:text-lg text-[#171e19] bg-[#ffe17c] hover:bg-[#ffdc5c] px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl border border-[#171e19]/20 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
             >
               <span>TEST ANY REGISTRATION</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </div>
 
           {/* Right Column: Vertical stack of three steps (8 cols out of 12) */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="lg:col-span-8 space-y-6 sm:space-y-8">
             {STEPS.map((step) => {
               const IconComponent = step.icon;
               return (
                 <div
                   key={step.num}
-                  className="group p-8 sm:p-10 bg-white border border-[#171e19]/15 rounded-2xl brutalist-card relative overflow-hidden flex flex-col sm:flex-row gap-6 sm:gap-8 items-start hover:border-[#171e19] transition-all"
+                  className="group p-5 sm:p-8 md:p-10 bg-white border border-[#171e19]/15 rounded-2xl brutalist-card relative overflow-hidden flex flex-col sm:flex-row gap-4 sm:gap-8 items-start hover:border-[#171e19] transition-all"
                 >
-                  {/* Massive 8xl numeral with #ffe17c/20% that changes to full opacity on hover */}
-                  <div className="font-anton text-7xl sm:text-8xl md:text-9xl text-[#ffe17c]/30 group-hover:text-[#ffe17c] transition-colors duration-300 select-none leading-none shrink-0">
+                  {/* Numeral with #ffe17c/20% that changes to full opacity on hover */}
+                  <div className="font-anton text-5xl sm:text-7xl md:text-9xl text-[#ffe17c]/40 group-hover:text-[#ffe17c] transition-colors duration-300 select-none leading-none shrink-0">
                     {step.num}
                   </div>
 
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-[#171e19] text-white rounded-lg group-hover:bg-[#ffe17c] group-hover:text-[#171e19] transition-colors">
-                        <IconComponent className="w-5 h-5" />
+                    <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                      <div className="p-1.5 sm:p-2 bg-[#171e19] text-white rounded-lg group-hover:bg-[#ffe17c] group-hover:text-[#171e19] transition-colors shrink-0">
+                        <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
-                      <h3 className="font-anton text-2xl sm:text-3xl text-[#171e19] tracking-wide">
+                      <h3 className="font-anton text-xl sm:text-2xl md:text-3xl text-[#171e19] tracking-wide">
                         {step.title}
                       </h3>
                     </div>
 
-                    <p className="font-satoshi text-[#171e19]/75 text-base leading-relaxed">
+                    <p className="font-satoshi text-[#171e19]/75 text-sm sm:text-base leading-relaxed">
                       {step.desc}
                     </p>
                   </div>

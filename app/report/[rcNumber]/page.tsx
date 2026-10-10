@@ -60,7 +60,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Back link & audit id */}
-          <div className="flex items-center justify-between py-4 mb-6 border-b border-[#171e19]/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 py-3 sm:py-4 mb-6 border-b border-[#171e19]/10">
             <Link
               href="/#verify"
               className="inline-flex items-center gap-2 font-satoshi text-xs font-bold uppercase tracking-wider text-[#171e19]/70 hover:text-[#171e19] transition-colors"
@@ -69,8 +69,8 @@ export default async function ReportPage({ params }: ReportPageProps) {
               <span>Verify Another Registration</span>
             </Link>
 
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs text-[#171e19]/50">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="font-mono text-[11px] sm:text-xs text-[#171e19]/50">
                 DATA SOURCE: {vehicle.dataSource}
               </span>
               <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
@@ -78,28 +78,28 @@ export default async function ReportPage({ params }: ReportPageProps) {
           </div>
 
           {/* Top Hero Banner */}
-          <div className="bg-[#171e19] text-white rounded-2xl p-8 sm:p-12 mb-8 brutalist-card-dark relative overflow-hidden border-2 border-[#171e19]">
-            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="bg-[#171e19] text-white rounded-2xl p-5 sm:p-8 md:p-12 mb-8 brutalist-card-dark relative overflow-hidden border-2 border-[#171e19]">
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
               <div>
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="px-3.5 py-1 bg-[#ffe17c] text-[#171e19] font-anton text-sm rounded tracking-wider">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <span className="px-3 py-1 bg-[#ffe17c] text-[#171e19] font-anton text-xs sm:text-sm rounded tracking-wider">
                     {vehicle.rcNumber}
                   </span>
-                  <span className="px-3 py-1 bg-white/10 text-white font-satoshi text-xs font-semibold uppercase tracking-wider rounded border border-white/10">
+                  <span className="px-2.5 py-1 bg-white/10 text-white font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded border border-white/10">
                     {vehicle.vehicleClass}
                   </span>
-                  <span className="px-3 py-1 bg-green-500/20 text-green-300 font-satoshi text-xs font-semibold uppercase tracking-wider rounded border border-green-500/30">
+                  <span className="px-2.5 py-1 bg-green-500/20 text-green-300 font-satoshi text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded border border-green-500/30">
                     {vehicle.ownerCount === 1 ? '1ST OWNER REGISTERED' : `${vehicle.ownerCount} PREVIOUS OWNERS`}
                   </span>
                 </div>
 
-                <h1 className="font-anton text-4xl sm:text-6xl text-white tracking-tight leading-[0.95] mb-3">
+                <h1 className="font-anton text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[0.95] mb-3">
                   {vehicle.makerModel}
                 </h1>
 
-                <p className="font-satoshi text-white/70 text-sm sm:text-base flex flex-wrap items-center gap-4">
+                <p className="font-satoshi text-white/70 text-xs sm:text-sm md:text-base flex flex-wrap items-center gap-2 sm:gap-4">
                   <span className="flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 text-[#ffe17c]" />
+                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ffe17c]" />
                     {vehicle.rtoLocation}
                   </span>
                   <span>•</span>
@@ -112,13 +112,13 @@ export default async function ReportPage({ params }: ReportPageProps) {
               </div>
 
               {/* Trust score & Booking CTA */}
-              <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-4 shrink-0">
-                <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-left lg:text-right">
-                  <span className="font-satoshi text-[11px] uppercase tracking-widest text-[#ffe17c] font-bold block">
+              <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-3 sm:gap-4 shrink-0">
+                <div className="p-3.5 sm:p-4 bg-white/5 rounded-xl border border-white/10 text-left lg:text-right">
+                  <span className="font-satoshi text-[10px] sm:text-[11px] uppercase tracking-widest text-[#ffe17c] font-bold block">
                     CHASSIS TRUST SCORE
                   </span>
-                  <div className="font-anton text-4xl sm:text-5xl text-white mt-0.5">
-                    {vehicle.trustScore} <span className="text-xl text-white/50">/ 100</span>
+                  <div className="font-anton text-3xl sm:text-5xl text-white mt-0.5">
+                    {vehicle.trustScore} <span className="text-lg sm:text-xl text-white/50">/ 100</span>
                   </div>
                   <span className="font-satoshi text-xs text-white/60">
                     {isLowRisk ? 'Low Risk Profile' : 'Attention Required'}
@@ -127,7 +127,7 @@ export default async function ReportPage({ params }: ReportPageProps) {
 
                 <Link
                   href={`/book/${encodeURIComponent(vehicle.rcNumber)}`}
-                  className="inline-flex items-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-base px-6 py-3.5 rounded-xl border border-[#171e19]/20 transition-all hover:scale-105 active:scale-95 shadow-xl"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ffe17c] hover:bg-[#ffdc5c] text-[#171e19] font-anton text-sm sm:text-base px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl border border-[#171e19]/20 transition-all hover:scale-105 active:scale-95 shadow-xl text-center"
                 >
                   <Wrench className="w-4 h-4 text-[#171e19]" />
                   <span>BOOK 150-PT INSPECTION (₹499)</span>
@@ -384,23 +384,23 @@ export default async function ReportPage({ params }: ReportPageProps) {
           </div>
 
           {/* Section 4: Physical Inspection CTA Banner */}
-          <div className="bg-[#ffe17c] border-2 border-[#171e19] rounded-2xl p-8 sm:p-12 text-[#171e19] shadow-2xl relative overflow-hidden">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="bg-[#ffe17c] border-2 border-[#171e19] rounded-2xl p-5 sm:p-8 md:p-12 text-[#171e19] shadow-xl sm:shadow-2xl relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
               <div className="max-w-2xl">
-                <span className="font-satoshi text-xs font-bold uppercase tracking-widest px-3 py-1 bg-white/70 rounded-full inline-block mb-4">
+                <span className="font-satoshi text-[11px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1 bg-white/70 rounded-full inline-block mb-3 sm:mb-4">
                   STEP 3 // PHYSICAL GROUND TRUTH
                 </span>
-                <h3 className="font-anton text-3xl sm:text-5xl tracking-tight leading-[0.9] mb-4">
+                <h3 className="font-anton text-2xl sm:text-4xl md:text-5xl tracking-tight leading-[0.95] sm:leading-[0.9] mb-3 sm:mb-4">
                   WANT A CERTIFIED MECHANIC TO AUDIT THIS EXACT CAR?
                 </h3>
-                <p className="font-satoshi text-base sm:text-lg text-[#171e19]/80 leading-relaxed">
+                <p className="font-satoshi text-sm sm:text-base md:text-lg text-[#171e19]/80 leading-relaxed">
                   Book a doorstep vehicle inspection in Bengaluru, Delhi NCR, Mumbai, Hyderabad, or Chennai. Our technician will test compression, paint gauge micron levels, and check underbody frame alignment for just ₹499.
                 </p>
               </div>
 
               <Link
                 href={`/book/${encodeURIComponent(vehicle.rcNumber)}`}
-                className="inline-flex items-center justify-center gap-3 bg-[#171e19] hover:bg-black text-white hover:text-[#ffe17c] font-anton text-xl px-8 py-5 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-xl shrink-0 cursor-pointer"
+                className="w-full lg:w-auto inline-flex items-center justify-center gap-3 bg-[#171e19] hover:bg-black text-white hover:text-[#ffe17c] font-anton text-lg sm:text-xl px-6 sm:px-8 py-4 sm:py-5 rounded-xl transition-all hover:scale-105 active:scale-95 shadow-xl shrink-0 cursor-pointer text-center"
               >
                 <span>BOOK FOR ₹499</span>
                 <ArrowRight className="w-5 h-5 stroke-[2.5]" />
