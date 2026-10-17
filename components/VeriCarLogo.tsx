@@ -16,10 +16,10 @@ export default function VeriCarLogo({
 }: VeriCarLogoProps) {
   const isDark = variant === 'dark';
 
-  const badgeDimensions = {
-    sm: 'w-7 h-7 sm:w-8 sm:h-8',
-    md: 'w-9 h-9 sm:w-10 sm:h-10',
-    lg: 'w-12 h-12 sm:w-14 sm:h-14',
+  const iconDimensions = {
+    sm: 'w-6 h-6 sm:w-7 sm:h-7',
+    md: 'w-8 h-8 sm:w-9 sm:h-9',
+    lg: 'w-11 h-11 sm:w-12 sm:h-12',
   }[size];
 
   const textSizes = {
@@ -29,48 +29,44 @@ export default function VeriCarLogo({
   }[size];
 
   return (
-    <div className={`inline-flex items-center gap-2.5 sm:gap-3 group select-none ${className}`}>
-      {/* Brand Icon Mark: Brutalist Automotive Shield + Verification Checkmark */}
-      <div
-        className={`${badgeDimensions} relative rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-105 ${
-          isDark
-            ? 'bg-[#ffe17c] shadow-[2px_2px_0px_0px_#ffffff]'
-            : 'bg-[#171e19] shadow-[3px_3px_0px_0px_#ffe17c]'
-        }`}
-      >
+    <div className={`inline-flex items-center gap-2 sm:gap-2.5 group select-none ${className}`}>
+      {/* 100% Transparent, Simple Minimalist Vector Icon: Car Roofline + Verification V-Check */}
+      <div className={`${iconDimensions} relative flex items-center justify-center shrink-0`}>
         <svg
-          viewBox="0 0 36 36"
+          viewBox="0 0 44 36"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5/6 h-5/6"
+          className="w-full h-full"
         >
-          {/* Subtle aerodynamic hood line */}
+          {/* Sleek Minimal Car Roofline Profile */}
           <path
-            d="M 6 11 L 30 11"
-            stroke={isDark ? '#171e19' : '#ffe17c'}
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeOpacity="0.45"
-          />
-          {/* Geometric Verification 'V' + Checkmark */}
-          <path
-            d="M 8 13.5 L 15.5 25.5 L 28.5 8.5"
-            stroke={isDark ? '#171e19' : '#ffffff'}
+            d="M 2 15 C 6 14.5, 12 14, 15 8 C 17 4, 27 4, 30 7.5 C 32 10, 33 12, 34 13"
+            stroke={isDark ? '#ffffff' : '#171e19'}
             strokeWidth="3.2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {/* Accent Truth Dot */}
-          <circle
-            cx="28.5"
-            cy="8.5"
-            r="2"
-            fill={isDark ? '#171e19' : '#ffe17c'}
+
+          {/* Left Wing of 'V' */}
+          <path
+            d="M 5 19 L 14.5 32"
+            stroke={isDark ? '#ffffff' : '#171e19'}
+            strokeWidth="3.8"
+            strokeLinecap="round"
+          />
+
+          {/* Verification Checkmark Stem (Forms Right Wing of 'V') */}
+          <path
+            d="M 12 21 L 18 28.5 L 40 8"
+            stroke="#16a34a"
+            strokeWidth="4.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>
 
-      {/* Brand Wordmark Typography */}
+      {/* Clean Brand Typography */}
       {showText && (
         <span
           className={`font-anton ${textSizes} tracking-wider transition-colors leading-none ${
