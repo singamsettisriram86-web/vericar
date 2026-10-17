@@ -21,8 +21,14 @@ export const metadata: Metadata = {
     'India\'s high-precision used car verification platform. Instant Vahan RC check, AI annual maintenance projections, and certified doorstep vehicle inspections.',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico' },
+      { url: '/favicon.svg?v=3', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png?v=3', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png?v=3', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico?v=3' },
+    ],
+    shortcut: '/favicon.ico?v=3',
+    apple: [
+      { url: '/apple-touch-icon.png?v=3', sizes: '180x180', type: 'image/png' },
     ],
   },
 };

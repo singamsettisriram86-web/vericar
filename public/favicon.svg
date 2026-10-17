@@ -1,8 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 36" fill="none">
-  <!-- Minimalist Car Roofline -->
-  <path d="M 2 15 C 6 14.5, 12 14, 15 8 C 17 4, 27 4, 30 7.5 C 32 10, 33 12, 34 13" stroke="#171e19" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <style>
+    .car-line { stroke: #171e19; }
+    @media (prefers-color-scheme: dark) {
+      .car-line { stroke: #ffffff; }
+    }
+  </style>
+  <!-- Background contour for dark/light contrast -->
+  <path d="M 4 20 C 8 19.5, 14 19, 17 13 C 19 9, 29 9, 32 12.5 C 34 15, 35 17, 36 18" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.6"/>
+  <path d="M 7 24 L 16.5 37" stroke="#ffffff" stroke-width="6.5" stroke-linecap="round" stroke-opacity="0.6"/>
+  
+  <!-- Car Roofline -->
+  <path class="car-line" d="M 4 20 C 8 19.5, 14 19, 17 13 C 19 9, 29 9, 32 12.5 C 34 15, 35 17, 36 18" stroke="#171e19" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  
   <!-- Left Wing of 'V' -->
-  <path d="M 5 19 L 14.5 32" stroke="#171e19" stroke-width="3.8" stroke-linecap="round"/>
-  <!-- Verification Checkmark (Right Wing of 'V') -->
-  <path d="M 12 21 L 18 28.5 L 40 8" stroke="#16a34a" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="car-line" d="M 7 24 L 16.5 37" stroke="#171e19" stroke-width="4.2" stroke-linecap="round"/>
+  
+  <!-- Verification Checkmark (Emerald Green) -->
+  <path d="M 14 26 L 20 33.5 L 42 13" stroke="#16a34a" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
