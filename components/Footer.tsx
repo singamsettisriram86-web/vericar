@@ -1,6 +1,7 @@
 // components/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
+import VeriCarLogo from './VeriCarLogo';
 
 export default function Footer() {
   return (
@@ -10,9 +11,7 @@ export default function Footer() {
           
           <div className="md:col-span-2">
             <Link href="/" className="inline-block mb-4">
-              <span className="font-anton text-3xl sm:text-4xl text-white tracking-wider">
-                VERICAR<span className="text-[#ffe17c]">.</span>
-              </span>
+              <VeriCarLogo variant="dark" size="md" />
             </Link>
             <p className="font-satoshi text-sm text-[#b7c6c2] max-w-md leading-relaxed">
               India&apos;s independent automotive truth protocol. We cross-reference MoRTH Vahan registries, state police challan databases, and proprietary AI repair algorithms to protect car buyers.

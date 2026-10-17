@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowRight, User, LogOut, ShieldCheck, Menu, X, Zap } from 'lucide-react';
 import LoginModal from './LoginModal';
 import RechargeModal from './RechargeModal';
+import VeriCarLogo from './VeriCarLogo';
 import { createClient } from '@/lib/supabaseClient';
 
 export default function Navbar() {
@@ -118,10 +119,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto h-full px-3 sm:px-6 lg:px-8 flex items-center justify-between">
           
           {/* Logo left */}
-          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-1 group shrink-0">
-            <span className="font-anton text-2xl sm:text-3xl md:text-4xl text-[#171e19] tracking-wider transition-colors group-hover:text-black">
-              VERICAR<span className="text-[#ffe17c] text-3xl sm:text-4xl">.</span>
-            </span>
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center shrink-0">
+            <VeriCarLogo size="md" variant="light" />
           </Link>
 
           {/* Center nav links (desktop) */}

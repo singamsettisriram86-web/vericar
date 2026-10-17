@@ -20,7 +20,10 @@ export const metadata: Metadata = {
   description:
     'India\'s high-precision used car verification platform. Instant Vahan RC check, AI annual maintenance projections, and certified doorstep vehicle inspections.',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' },
+    ],
   },
 };
 
